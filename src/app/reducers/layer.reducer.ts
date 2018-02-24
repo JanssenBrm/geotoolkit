@@ -38,6 +38,14 @@ export function layerReducer(state = l_init_state, action) {
         backgroundLayers: backgroundLayers
       });
       break;
+    case LayerActions.ADD_LAYERS:
+
+      const newLayers = state.layers.concat(action.body);
+      state = Object.assign({}, state, {
+        layers: newLayers
+      });
+
+      break;
   }
   return state;
 }

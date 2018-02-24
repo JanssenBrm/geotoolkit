@@ -20,6 +20,9 @@ export class MapComponent implements OnInit, OnChanges {
   @Input()
   backgroundLayers: any[];
 
+  @Input()
+  layers: any[];
+
   constructor() { }
 
 
@@ -32,7 +35,22 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
+    let newLayers = [];
+    if(!changes.layers.isFirstChange()){
+       changes.layers.currentValue.forEach( layerInfo => {
+           const hit = changes.layers.previousValue.find(prevLayerInfo => prevLayerInfo.url === layerInfo.url);
+
+           if (!hit) {
+             newLayers.push(layerInfo);
+           }
+         }
+       );
+
+       this.addLayers(newLayers);
+    }
   }
+
 
   initMap(){
     let extent = ol.proj.transformExtent(this.extent, /* WGS84 */ 'EPSG:4326', /* MERCATOR */ 'EPSG:3857');
@@ -56,7 +74,6 @@ export class MapComponent implements OnInit, OnChanges {
       }),
       target: 'map'
     });
-
     this.setBackgroundLayers();
   }
   setBackgroundLayers(){
@@ -65,6 +82,14 @@ export class MapComponent implements OnInit, OnChanges {
         this.map.addLayer(layer.layer);
     })
 
+  }
+
+  addLayers(layers: any[]){
+    layers.forEach(layerInfo => {
+      layerInfo.layers.forEach(layer => {
+        this.map.addLayer(layer.layer);
+      })
+    });
   }
 
 

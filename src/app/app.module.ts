@@ -17,6 +17,8 @@ import {
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayerselectionComponent } from './components/sidebar/layerselection/layerselection.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpClientModule} from "@angular/common/http";
+import {HttpModule} from "@angular/http";
 
 
 const routes: Routes = [
@@ -46,7 +48,9 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes, { enableTracing: true } ),
     NgReduxModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    HttpModule
   ],
   providers: [
     LayerService
