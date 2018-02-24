@@ -1,1 +1,9 @@
-<h1>HEllo world!</h1>
+<app-map *ngIf="(layers | async).backgroundLayers.length > 0"  [backgroundLayers]="(layers | async).backgroundLayers" [extent]="[-46.933594,16.636192,85.781250,72.867930]"></app-map>
+
+<div class="sidebar">
+  <app-sidebar *ngIf="(ui | async).activeAction" [action]="(ui | async).activeAction"></app-sidebar>
+  <app-toolbox></app-toolbox>
+</div>
+
+'
+k

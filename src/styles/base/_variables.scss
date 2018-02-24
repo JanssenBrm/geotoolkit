@@ -1,0 +1,23 @@
+// color variables
+$primary-color: rgba(255, 255, 255,0.8);
+$secondary-color: rgb(90, 90, 90);
+$highlight-color: rgb(45, 134, 66);
+$highlight-hover-color: rgba(45, 134, 66, .2);
+$disabled-color: rgb(217, 217, 217);
+$error-color: rgb(213, 64, 87);
+$grey-shade: #dedede;
+$grey-shade-light: #eeeeee;
+
+// border colors
+$tab-border-color: rgb(85, 85, 85);
+$list-border-color: rgb(222, 222, 222);
+$input-border-color: rgb(153, 153, 153);
+
+// font variables
+$font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+
+// component variables
+$top-bar-height: 64px;
+$button-height: 40px;
+$list-item-height: 3em;
+$default-box-shadow: 0 3px 5px rgba(100, 100, 100, 0.49);

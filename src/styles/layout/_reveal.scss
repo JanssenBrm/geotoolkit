@@ -1,0 +1,50 @@
+.reveal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: rgba($primary-color, .65);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.reveal {
+    position: relative;
+    background-color: white;
+    border-radius: $default-border-radius;
+    padding: $default-padding;
+    box-shadow: $default-box-shadow;
+    min-width: $reveal-min-width;
+
+    .closer {
+        position: absolute;
+        top: $default-margin;
+        right: $default-margin;
+        color: $secondary-color;
+        transition: color .5s ease;
+        &:hover {
+            cursor: pointer;
+            color: lighten($secondary-color, 50%);
+        }
+        &::after {
+            display: block;
+            content: '\f00d';
+            font-family: 'FontAwesome';
+            font-size: $larger-font-size;
+        }
+    }
+
+    .heading {
+        text-align: center;
+        color: $primary-color;
+        padding: $default-margin;
+        margin-top: $default-padding;
+        margin-bottom: $default-padding;
+        border-bottom: 1px solid $grey-shade-two;
+        border-top: 1px solid $grey-shade-two;
+    }
+}

@@ -1,0 +1,12 @@
+.top-bar {
+    height: $top-bar-height;
+    background-color: $primary-color;
+    color: white;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    top: $top-bar-height;
+}

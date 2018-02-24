@@ -1,0 +1,24 @@
+html, body, h1, h2, h3, h4, h5, h6, ul, li, input, select {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: $grey-shade-two;
+    height: 100%;
+    width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+input:focus, select:focus, button:focus {
+    outline: none;
+}

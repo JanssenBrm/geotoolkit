@@ -1,0 +1,91 @@
+.row {
+    display: flex;
+    flex-flow: row wrap;
+    .columns {
+        position: relative;
+        flex: 1 1 0px;
+        min-width: 0;
+        padding-left: $default-padding;
+        &:last-child {
+            padding-right: $default-padding;
+        }
+    }
+    .shrink {
+        flex: 0 0 auto;
+        max-width: 100%;
+    }
+    .columns-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .columns-11 {
+        flex: 0 0 calc(100% / (12 / 11));
+        max-width: calc(100% / (12 / 11));
+    }
+    .columns-10 {
+        flex: 0 0 calc(100% / (12 / 10));
+        max-width: calc(100% / (12 / 10));
+    }
+    .columns-9 {
+        flex: 0 0 calc(100% / (12 / 9));
+        max-width: calc(100% / (12 / 9));
+    }
+    .columns-8 {
+        flex: 0 0 calc(100% / (12 / 8));
+        max-width: calc(100% / (12 / 8));
+    }
+    .columns-7 {
+        flex: 0 0 calc(100% / (12 / 7));
+        max-width: calc(100% / (12 / 7));
+    }
+    .columns-6 {
+        flex: 0 0 calc(100% / (12 / 6));
+        max-width: calc(100% / (12 / 6));
+    }
+    .columns-5 {
+        flex: 0 0 calc(100% / (12 / 5));
+        max-width: calc(100% / (12 / 5));
+    }
+    .columns-4 {
+        flex: 0 0 calc(100% / (12 / 4));
+        max-width: calc(100% / (12 / 4));
+    }
+    .columns-3 {
+        flex: 0 0 calc(100% / (12 / 3));
+        max-width: calc(100% / (12 / 3));
+    }
+    .align-self-top {
+        align-self: flex-start;
+    }
+    .align-self-middle {
+        align-self: center;
+    }
+    .align-self-bottom {
+        align-self: flex-end;
+    }
+    .justify-content-middle {
+        display: flex;
+        justify-content: center;
+    }
+    .justify-content-right {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.row {
+    &.collapse {
+        .columns {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+    &.collapse-end {
+        .columns:last-child {
+            padding-right: 0;
+        }
+        .columns:first-child {
+            padding-left: 0;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+.pills {
+    display: flex;
+    align-items: center;
+    margin-bottom: $default-margin;
+    height: $button-height;
+    .pill {
+        display: flex;
+        align-items: center;
+        padding: $default-margin $default-padding;
+        border-radius: 40px;
+        border: 2px solid $secondary-color;
+        margin-right: $default-margin;
+        background-color: $secondary-color;
+        color: white;
+        .pill-icon {
+            margin-right: $default-margin;
+        }
+        .pill-name {
+            text-transform: uppercase;
+            font-size: $smaller-font-size;
+            font-weight: $semi-bold;
+        }
+        &.active, &:hover {
+            background-color: $highlight-color;
+            color: white;
+            border-color: transparent;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

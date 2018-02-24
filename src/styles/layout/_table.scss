@@ -1,0 +1,66 @@
+.table {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .table-head {
+        font-weight: $semi-bold;
+        background-color: $secondary-color !important;
+        color: white;
+    }
+    .table-body {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+    .table-row {
+        display: flex;
+        align-items: center;
+        flex-grow: 0;
+        width: 100%;
+        min-height: $table-row-height;
+        border-bottom: 1px solid $grey-shade-two;
+        transition: background-color .5s ease;
+        &:nth-child(odd) {
+            background-color: $grey-shade-one;
+        }
+        &:nth-child(even) {
+            background-color: white;
+        }
+        &:hover {
+            background-color: rgba($highlight-color, .5);
+            cursor: pointer;
+        }
+    }
+    .table-col {
+        position: relative;
+        height: $table-row-height;
+        width: 100%;
+        line-height: $table-row-height;
+        padding: 0 $table-col-padding;
+        border-left: 1px solid $grey-shade-two;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        &:first-child {
+            border-left-width: 0;
+        }
+        &.sortable {
+            cursor: pointer;
+            &::after {
+                display: block;
+                content: '\f0dc';
+                font-family: 'FontAwesome';
+                position: relative;
+                float: right;
+                line-height: $table-row-height;
+            }
+            &.ascending::after {
+                content: '\f0dd';
+            }
+            &.descending::after {
+                content: '\f0de';
+            }
+        }
+    }
+}

@@ -1,0 +1,43 @@
+$fa-font-path: '../../node_modules/font-awesome/fonts';
+$OpenSansPath: '../../node_modules/open-sans-fontface/fonts';
+
+@import "../../../node_modules/font-awesome/scss/font-awesome";
+@import "../../../node_modules/open-sans-fontface/open-sans";
+
+$open-sans: 'Open Sans', sans-serif;
+
+$light: 300;
+$regular: 400;
+$semi-bold: 600;
+$bold: 700;
+$extra-bold: 800;
+
+$extra-small-font-size: 6px;
+$small-font-size: 8px;
+$smaller-font-size: 10px;
+$regular-font-size: 12px;
+$larger-font-size: 14px;
+$large-font-size: 16px;
+$extra-large-font-size: 18px;
+
+html, body, input, select, button {
+    font-family: $open-sans;
+    font-style: normal;
+    font-weight: $regular;
+    font-size: $regular-font-size;
+}
+
+h1 {
+    font-size: $extra-large-font-size;
+    font-weight: $bold;
+}
+
+h2 {
+    font-size: $large-font-size;
+    font-weight: $bold;
+}
+
+h3 {
+    font-size: $larger-font-size;
+    font-weight: $semi-bold;
+}

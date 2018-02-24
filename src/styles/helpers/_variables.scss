@@ -1,0 +1,34 @@
+// Buttons
+$button-height: 40px;
+$button-medium-width: 100px;
+$button-small-width: 40px;
+$button-padding: .5em;
+
+// Inputs
+$input-height: 40px;
+$input-padding: .5em;
+
+// Tables
+$table-row-height: 40px;
+$table-col-padding: .5em;
+
+// Layout
+$top-bar-height: 64px;
+$popup-min-width: 200px;
+$reveal-min-width: 300px;
+
+// Colors
+$primary-color: rgb(255, 255, 255);
+$secondary-color: rgba(90, 90, 90, 0.9);
+$highlight-color: rgb(57, 135, 69);
+$history-highlight-color: rgb(57, 135, 69);
+$alert-color: rgb(213, 64, 87);
+$grey-shade-one: rgb(238, 238, 238);
+$grey-shade-two: rgb(222, 222, 222);
+
+// Defaults
+$default-padding: 1em;
+$default-margin: .5em;
+$default-border-radius: 3px;
+$default-box-shadow: 4px 4px 5px rgba(100, 100, 100, 0.2);
+$small-breakpoint: 920px;

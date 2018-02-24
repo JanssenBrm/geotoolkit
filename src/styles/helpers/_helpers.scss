@@ -1,0 +1,12 @@
+@import 'variables';
+
+@media all and (min-width: $small-breakpoint) {
+    .show-small {
+        display: none !important;
+    }
+}
+@media all and (max-width: $small-breakpoint) {
+    .hide-small {
+        display: none !important;
+    }
+}

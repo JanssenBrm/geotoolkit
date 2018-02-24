@@ -1,0 +1,50 @@
+.ol-overlaycontainer-stopevent {
+  position: absolute;
+  bottom: $default-margin;
+  right: $default-margin;
+  display: flex;
+  flex-direction: column;
+}
+
+.ol-control {
+  position: relative;
+  button {
+    display: block;
+    width: $button-small-width;
+    height: $button-small-width;
+    background-color: $secondary-color;
+    color: white;
+    font-size: $large-font-size;
+    font-weight: $semi-bold;
+    border: 0;
+    cursor: pointer;
+  }
+}
+
+.ol-zoom {
+  order: 2;
+  button:first-child {
+    margin-bottom: 1px;
+    cursor: pointer;
+  }
+}
+
+.ol-zoom-extent {
+  order: 1;
+  margin-bottom: $default-margin;
+}
+
+.ol-scale-line {
+  position: fixed;
+  bottom: $default-margin;
+  left: $default-margin;
+  background-color: rgba(white, .5);
+  padding: $default-margin;
+  .ol-scale-line-inner {
+    border: 2px solid $secondary-color;
+    border-top-width: 0;
+    text-align: center;
+    font-weight: $semi-bold;
+    color: $secondary-color;
+  }
+}

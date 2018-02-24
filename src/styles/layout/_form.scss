@@ -1,0 +1,37 @@
+.form {
+    .form-group {
+        align-items: flex-end;
+        margin-bottom: $default-margin;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    .form-error {
+        opacity: 0;
+        /*
+            Width, height & visibility to prevent text wrapping.
+            Not setting display to prevent overwriting custom display values when visiblility is wanted
+        */
+        width: 0;
+        height: 0;
+        visibility: hidden;
+        margin-left: auto;
+        font-weight: $regular;
+        font-style: italic;
+        color: $alert-color;
+    }
+    &.submitted {
+        *.ng-invalid {
+            border-color: $alert-color;
+            db-date.ng-invalid input {
+                border-color: $alert-color;
+            }
+        }
+        .form-error {
+            opacity: 1;
+            width: auto;
+            height: auto;
+            visibility: visible;
+        }
+    }
+}

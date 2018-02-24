@@ -1,0 +1,50 @@
+.accordion {
+    position: relative;
+    margin-bottom: $default-margin;
+    width: 100%;
+    overflow: hidden;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    &>input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+    &>input[type="checkbox"]:checked~.accordion-content {
+        max-height: 500px;
+    }
+    &>input[type="checkbox"]:checked~label::after {
+        transform: rotate(180deg);
+    }
+    &>label {
+        position: relative;
+        display: block;
+        padding: $default-padding;
+        background-color: $secondary-color;
+        color: white;
+        &:hover {
+            cursor: pointer;
+        }
+        &::after {
+            position: absolute;
+            right: $default-padding;
+            top: $default-padding;
+            display: block;
+            text-align: center;
+            -webkit-transition: all .35s;
+            -o-transition: all .35s;
+            transition: all .35s;
+            content: '\f078';
+            font-family: 'FontAwesome';
+        }
+    }
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        -webkit-transition: max-height .35s;
+        -o-transition: max-height .35s;
+        transition: max-height .35s;
+        background-color: white;
+    }
+}

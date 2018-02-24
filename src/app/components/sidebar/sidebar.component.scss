@@ -1,0 +1,9 @@
+@import '../../../styles/helpers/variables';
+
+:host{
+  width:40rem;
+  height:75rem;
+  padding:2rem;
+  background-color: $primary-color;
+  color: $secondary-color;
+}

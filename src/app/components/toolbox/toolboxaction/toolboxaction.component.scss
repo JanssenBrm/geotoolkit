@@ -1,0 +1,28 @@
+@import '../../../../styles/helpers/variables';
+
+
+div{
+  background-color: $secondary-color;
+  color: $primary-color;
+  -webkit-border-top-right-radius: 0.5rem;
+  -webkit-border-bottom-right-radius: 0.5rem;
+  -moz-border-radius-topright: 0.5rem;
+  -moz-border-radius-bottomright: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  padding:1rem;
+  cursor: pointer;
+  box-shadow: $default-box-shadow;
+  margin-bottom:0.2rem;
+}
+
+
+
+.active{
+  background-color: $primary-color;
+  color: $secondary-color;
+}
+
+i {
+  font-size:1.5rem;
+}

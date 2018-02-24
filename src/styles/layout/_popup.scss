@@ -1,0 +1,46 @@
+.popup {
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    margin: $default-margin;
+    min-width: $popup-min-width;
+    &.top {
+        top: 0;
+    }
+    &.bottom {
+        bottom: 0;
+    }
+    &.left {
+        left: 0;
+    }
+    &.right {
+        right: 0;
+    }
+    .closer {
+        position: absolute;
+        top: $default-margin;
+        right: $default-margin;
+        color: white;
+        transition: color .5s ease;
+        &:hover {
+            cursor: pointer;
+            color: lighten($secondary-color, 50%);
+        }
+        &::after {
+            display: block;
+            content: '\f00d';
+            font-family: 'FontAwesome';
+            font-size: $larger-font-size;
+        }
+    }
+    .heading {
+        background-color: $secondary-color;
+        color: white;
+        padding: $default-margin $default-padding;
+        padding-right: $default-margin + $default-padding;
+    }
+
+    .body {
+        padding: $default-padding;
+    }
+}

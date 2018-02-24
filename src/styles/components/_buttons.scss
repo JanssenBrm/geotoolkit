@@ -1,0 +1,107 @@
+.button {
+    position: relative;
+    height: $button-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $regular-font-size;
+    font-weight: $semi-bold;
+    text-transform: uppercase;
+    border: 1px solid $grey-shade-two;
+    background-color: $grey-shade-one;
+    color: $primary-color;
+    padding: 0 $default-padding;
+    transition: background-color .5s ease;
+    &.small {
+        font-size: $large-font-size;
+        flex-direction: column;
+        padding: 0;
+        width: $button-small-width;
+    }
+    &.medium {
+        width: $button-medium-width;
+    }
+    &.large {
+        width: 100%;
+    }
+    &.secondary {
+        background-color: $secondary-color;
+        color: white;
+        border: 0;
+        &:hover {
+            background-color: lighten($secondary-color, 10%);
+        }
+    }
+    &.primary {
+        background-color: $highlight-color;
+        color: white;
+        border: 0;
+        &:hover {
+            background-color: lighten($highlight-color, 10%);
+        }
+    }
+    &.alert {
+        background-color: $alert-color;
+        color: white;
+        border: 0;
+        &:hover {
+            background-color: lighten($alert-color, 10%);
+        }
+    }
+    &.disabled {
+        background-color: rgba($grey-shade-one, .25);
+        cursor: default !important;
+    }
+    &.dropdown {
+        &>label {
+            background-color: transparent;
+            border: 0;
+            color: white;
+            cursor: pointer;
+            height: inherit;
+            &::after {
+                display: block;
+                content: '\f0d7';
+                font-family: 'FontAwesome';
+                position: relative;
+                float: right;
+                margin-left: 1em;
+            }
+        }
+        &>input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            z-index: -1;
+        }
+        &>input[type="checkbox"]:checked~.dropdown-list {
+            display: block;
+        }
+    }
+    &.icon>*:first-child {
+        margin-right: $default-margin;
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.button.dropdown .dropdown-list {
+    display: none;
+    position: absolute;
+    top: $button-height;
+    left: 0;
+    background-color: white;
+    color: $primary-color;
+    box-shadow: $default-box-shadow;
+    text-transform: none;
+    text-align: left;
+    z-index: 1000;
+    li {
+        font-weight: $regular;
+        padding: $button-padding $default-padding;
+        border-bottom: 1px solid $grey-shade-two;
+        &:hover {
+            background-color: $grey-shade-one;
+        }
+    }
+}

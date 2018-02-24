@@ -1,0 +1,21 @@
+.button-group > * {
+    &:nth-child(even) {
+        margin-left: $default-margin;
+        margin-right: $default-margin;
+    }
+    &:first-child {
+        margin-left: 0;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.button-group,
+.button-pair {
+    display: flex;
+    align-items: center;
+    &.large>.button {
+        flex: 1;
+    }
+}
