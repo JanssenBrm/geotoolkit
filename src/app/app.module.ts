@@ -19,6 +19,7 @@ import { LayerselectionComponent } from './components/sidebar/layerselection/lay
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
+import { DrawComponent } from './components/sidebar/draw/draw.component';
 
 
 const routes: Routes = [
@@ -42,7 +43,8 @@ const routes: Routes = [
     ActionsComponent,
     ToolboxActionComponent,
     SidebarComponent,
-    LayerselectionComponent
+    LayerselectionComponent,
+    DrawComponent
   ],
   imports: [
     BrowserModule,

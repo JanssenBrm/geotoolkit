@@ -6,8 +6,16 @@
 </select>
 
 <h2>External source:</h2>
-<input type="text" placeholder="Capabilities URL" (change)="loadExternalSource($event.target.value)">
+<input type="text" placeholder="Capabilities URL" (change)="loadExternalSource($event.target)">
+<div *ngIf="status != ''" class="status {{status.indexOf('error') >= 0 ? 'error' : ''}}">
+  <div class="statusIcon">
+    <i *ngIf="status.indexOf('Loading') >= 0" class="fa fa-circle-o-notch fa-spin"></i><i *ngIf="status.indexOf('error') >= 0" class="fa fa-exclamation-circle"></i>
+  </div>
+  <div class="statusText">
+    {{status}}
+  </div>
+</div>
 <div *ngFor="let info of layerInfo" class="externalSource">
   <h3>{{info.url}}</h3>
-  <div *ngFor="let layer of info.layers" class="layerInfo"><div class="toggle"><input type="checkbox" (change)="toggleLayer(layer.layer)"></div><span class="info"><span class="title">{{layer.name}}</span><br/><span class="description">{{layer.description}}</span></span></div>
+  <div *ngFor="let layer of info.layers" class="layerInfo" (click)="toggleLayer(layer.layer)"><div class="toggle"><input type="checkbox" [checked]="layer.layer.getVisible()"></div><span class="info"><span class="title">{{layer.name}}</span><br/><span class="description">{{layer.description}}</span></span></div>
 </div>

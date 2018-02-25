@@ -20,11 +20,20 @@ h3{
   background-color: $highlight-color;
   border: 1px solid $border-color;
   padding: 0.5rem;
+  border-radius: $alert-radius;
 }
 
 .layerInfo{
   display:flex;
   flex-direction:row;
+  padding:0.5rem;
+  border-radius: $alert-radius;
+}
+
+.layerInfo:hover{
+  background-color: $secondary-color;
+  color: $primary-color;
+  cursor: pointer;
 }
 
 .description{
@@ -38,4 +47,30 @@ h3{
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.status{
+  padding: .75rem 1.25rem;
+  display:flex;
+  flex-direction: row;
+  margin:0.5rem 0;
+  background-color: $highlight-color;
+  border: 1px solid $border-color;
+  border-radius: $alert-radius;
+}
+
+.statusIcon{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statusText{
+  margin-left: 1rem;
+}
+.error{
+  color:$alert-color;
+  background-color: $alert-background;
+  border: $alert-border;
+  border-radius: $alert-radius;
 }

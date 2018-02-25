@@ -18,8 +18,10 @@ export class LayerselectionComponent implements OnInit {
 
   backgroundLayers: any[];
   layerInfo: any[];
+  status: string;
 
   ngOnInit() {
+    this.status = '';
     this.layers.subscribe(state =>{
       this.backgroundLayers =  state.backgroundLayers;
       this.layerInfo = state.layers;
@@ -33,8 +35,11 @@ export class LayerselectionComponent implements OnInit {
     })
   }
 
-  loadExternalSource(url: any){
+  loadExternalSource(event: any){
+    this.status = "Loading external source";
+    const url = event.value;
     this.layerService.loadExternalLayers(url).subscribe(layers => {
+      this.status = "";
       this.ngRedux.dispatch({
         type: LayerActions.ADD_LAYERS,
         body: {
@@ -43,11 +48,27 @@ export class LayerselectionComponent implements OnInit {
         }
       });
       console.log("layers", layers);
-    })
+    },
+      error => {
+          this.status = `An error occurred - ${error.message}`;
+      });
+
+    event.value = "";
   }
 
   toggleLayer(layer: any){
     layer.setVisible(!layer.getVisible());
+
+    if(layer.getVisible()){
+      this.ngRedux.dispatch({
+        type: LayerActions.SET_EXTENT,
+        body: {
+          extent: layer.getExtent()
+        }
+      });
+    }
+
+
   }
 
 }
