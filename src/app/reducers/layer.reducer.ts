@@ -5,13 +5,15 @@ export interface LayerState {
   layers: any[],
   extent: number[],
   features: any[];
+  crs: string;
 }
 
 export const l_init_state: LayerState = {
   backgroundLayers: [],
   layers: [],
   extent: null,
-  features: []
+  features: [],
+  crs: 'EPSG:3857'
 };
 
 export function layerReducer(state = l_init_state, action) {
@@ -78,6 +80,16 @@ export function layerReducer(state = l_init_state, action) {
 
       state = Object.assign({}, state, {
         features: currFeatures
+      });
+
+      break;
+
+    case LayerActions.SET_PROJECTION_SYSTEM:
+
+      console.log("LAYER REDUCER", "Setting projection system", action);
+      const newCrs = action.body.crs;
+      state = Object.assign({}, state, {
+        crs: newCrs
       });
 
       break;

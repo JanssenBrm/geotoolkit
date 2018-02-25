@@ -1,0 +1,83 @@
+@import '../../../../styles/helpers/variables';
+
+h1{
+  margin-bottom: 1.5rem;
+}
+
+h2{
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  margin-top:1rem;
+}
+
+h3{
+  font-size: 0.9rem;
+  margin-bottom:1rem;
+}
+
+
+.featureInfo {
+  margin: 0.5rem 0;
+  background-color: $highlight-color;
+  border: 1px solid $border-color;
+  padding: 0.5rem;
+  border-radius: $alert-radius;
+  word-wrap: break-word;
+}
+
+.projection{
+  display:flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom:1.5rem;
+}
+
+.projection i{
+  margin-right: 0.5rem;
+  font-size:1.5rem;
+}
+
+.btn-group{
+  display:flex;
+  flex-direction:row;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.btn-group button {
+  background-color: $primary-color;
+  border: 1px solid $border-color;
+  color: $secondary-color;
+  padding: .5rem 1.5rem;
+  cursor: pointer;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none;
+}
+
+.btn-group button:first-child {
+  border-bottom-left-radius: .5rem;
+  border-top-left-radius: .5rem;
+}
+
+.btn-group button:last-child {
+  border-bottom-right-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:hover {
+  background-color: $highlight-color;
+  color: $secondary-color;
+}
+
+.btn-group button.active{
+  background-color: $secondary-color;
+  color: $primary-color;
+}
