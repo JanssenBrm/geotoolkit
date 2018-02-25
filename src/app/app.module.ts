@@ -28,7 +28,7 @@ const routes: Routes = [
     component: MainComponent
   },
   { path: '',
-    redirectTo: '/main',
+    component: MainComponent,
     pathMatch: 'full'
   },
 ];
