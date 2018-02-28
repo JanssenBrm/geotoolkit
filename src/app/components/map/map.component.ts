@@ -33,6 +33,9 @@ export class MapComponent implements OnInit, OnChanges {
   @Input()
   interaction: string;
 
+  @Input()
+  features: any[];
+
   constructor( private ngRedux: NgRedux<IAppState>) { }
 
   interactions: any[];
@@ -70,6 +73,11 @@ export class MapComponent implements OnInit, OnChanges {
       this.zoomToExtent(this.viewExtent);
     }
 
+    if(changes.features && !changes.features.isFirstChange()){
+      this.vectorLayer.getSource().clear();
+      this.vectorLayer.getSource().addFeatures(this.features);
+    }
+
   }
 
 
@@ -78,7 +86,7 @@ export class MapComponent implements OnInit, OnChanges {
     let center = ol.extent.getCenter(extent);
 
     this.vectorLayer = new ol.layer.Vector({
-      source: new ol.source.Vector({wrapX: false}),
+      source: new ol.source.Vector({features: this.features, wrapX: false}),
       zIndex: 99
     });
 
@@ -166,14 +174,21 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   removeInteraction(type: string){
+
+
     if(type !== null && type !== ''){
-      this.map.removeInteraction(this.interactions.find(interaction => interaction.type === type).interaction);
+      const interaction = this.interactions.find(interaction => interaction.type === type);
+      if(interaction)
+        this.map.removeInteraction(interaction.interaction);
     }
   }
 
   addInteraction(type: string){
+
     if(type !== null && type !== '') {
-      this.map.addInteraction(this.interactions.find(interaction => interaction.type === type).interaction);
+      const interaction = this.interactions.find(interaction => interaction.type === type);
+      if(interaction)
+        this.map.addInteraction(interaction.interaction);
     }
   }
   zoomToExtent(extent: number[]){

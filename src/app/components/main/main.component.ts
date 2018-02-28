@@ -29,11 +29,18 @@ export class MainComponent implements OnInit {
   @select() layers;
   @select() ui;
 
+  features: any[] = [];
+
   constructor( private ngRedux: NgRedux<IAppState>, private layerService: LayerService) { }
 
   ngOnInit() {
 
     const layers = this.layerService.getLayers();
+
+    this.layers.subscribe(state => {
+      this.features = [];
+      state.features.forEach(feature => {this.features = this.features.concat(feature.features)});
+    })
 
     this.ngRedux.dispatch({
       type: LayerActions.SET_BACKGROUND_LAYERS, body: layers,

@@ -84,6 +84,16 @@ export function layerReducer(state = l_init_state, action) {
 
       break;
 
+    case LayerActions.ADD_FEATURE_LIST:
+      console.log("LAYER REDUCER", "Adding feature list", action);
+      const features = action.body;
+
+      features.features.forEach(feature => {
+        state = layerReducer(state, {type: LayerActions.ADD_FEATURE, body: { type: features.type, feature: feature }});
+      });
+
+      break;
+
     case LayerActions.SET_PROJECTION_SYSTEM:
 
       console.log("LAYER REDUCER", "Setting projection system", action);

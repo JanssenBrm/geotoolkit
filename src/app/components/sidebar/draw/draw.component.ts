@@ -68,4 +68,21 @@ export class DrawComponent implements OnInit {
     })
   }
 
+  addFeature(feature: any){
+
+    const featureList = (new ol.format.GeoJSON()).readFeatures(feature, {
+      featureProjection: 'EPSG:3857',
+      dataProjection: this.crs
+    });
+
+
+    this.ngRedux.dispatch({
+      type: LayerActions.ADD_FEATURE_LIST,
+      body:{
+        features: featureList,
+        type: 'custom'
+      }
+    })
+  }
+
 }

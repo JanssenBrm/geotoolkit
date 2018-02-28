@@ -1,8 +1,9 @@
 <div class="btn-group actionlist">
-  <button type="button" class="btn btn-primary {{drawAction === 'bbox' ? 'active' : ''}}" (click)="setDrawAction('bbox')"><i class="fa fa-square"></i></button>
-  <button type="button" class="btn btn-primary {{drawAction === 'polygon' ? 'active' : ''}}" (click)="setDrawAction('polygon')"><i class="fa fa-star"></i></button>
+  <button type="button" class="btn btn-primary {{drawAction === 'bbox' ? 'active' : ''}}" (click)="setDrawAction('bbox')"><i class="fa fa-square-o"></i></button>
+  <button type="button" class="btn btn-primary {{drawAction === 'polygon' ? 'active' : ''}}" (click)="setDrawAction('polygon')"><i class="fa fa-star-o"></i></button>
   <button type="button" class="btn btn-primary {{drawAction === 'circle' ? 'active' : ''}}" (click)="setDrawAction('circle')"><i class="fa fa-circle-o"></i></button>
   <button type="button" class="btn btn-primary {{drawAction === 'point' ? 'active' : ''}}" (click)="setDrawAction('point')"><i class="fa fa-map-marker"></i></button>
+  <button type="button" class="btn btn-primary {{drawAction === 'custom' ? 'active' : ''}}" (click)="setDrawAction('custom')"><i class="fa fa-pencil-square-o"></i></button>
 
 </div>
 
@@ -60,6 +61,15 @@
       <p>
         {{formatFeatureGeometry(feature)}}
       </p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="drawAction == 'custom'">
+  <h1>Custom GeoJSON</h1>
+  <div>
+    <div class="featureInfo">
+      <textarea (change)="addFeature($event.target.value)"></textarea>
     </div>
   </div>
 </div>
