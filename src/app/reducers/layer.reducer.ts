@@ -6,6 +6,7 @@ export interface LayerState {
   extent: number[],
   features: any[];
   crs: string;
+  activeFeature: any;
 }
 
 export const l_init_state: LayerState = {
@@ -13,7 +14,8 @@ export const l_init_state: LayerState = {
   layers: [],
   extent: null,
   features: [],
-  crs: 'EPSG:3857'
+  crs: 'EPSG:3857',
+  activeFeature: null,
 };
 
 export function layerReducer(state = l_init_state, action) {
@@ -91,6 +93,24 @@ export function layerReducer(state = l_init_state, action) {
       features.features.forEach(feature => {
         state = layerReducer(state, {type: LayerActions.ADD_FEATURE, body: { type: features.type, feature: feature }});
       });
+
+      break;
+
+
+    case LayerActions.SELECT_FEATURE:
+
+      console.log("LAYER REDUCER", "Selecting feature", action);
+      const featList = state.features.find(featureInfo => featureInfo.type === action.body.type);
+
+      if(featList){
+        const activeFeature = featList.features.find(feat => feat == action.body.feature);
+
+        if(activeFeature){
+          state = Object.assign({}, state, {
+            activeFeature: activeFeature,
+          });
+        }
+      }
 
       break;
 

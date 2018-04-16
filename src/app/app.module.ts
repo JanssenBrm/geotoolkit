@@ -20,6 +20,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
 import { DrawComponent } from './components/sidebar/draw/draw.component';
+import {MapboxService} from "./services/mapbox.service";
+import { KeysPipe } from './pipes/keys.pipe';
 
 
 const routes: Routes = [
@@ -44,7 +46,8 @@ const routes: Routes = [
     ToolboxActionComponent,
     SidebarComponent,
     LayerselectionComponent,
-    DrawComponent
+    DrawComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ const routes: Routes = [
     HttpModule
   ],
   providers: [
-    LayerService
+    LayerService,
+    MapboxService
   ],
   bootstrap: [AppComponent]
 })

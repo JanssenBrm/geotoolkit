@@ -5,6 +5,7 @@ import {IAppState} from "../../reducers/root.reducer";
 import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {LayerState} from "../../reducers/layer.reducer";
 import {LayerActions} from "../../actions/layers.action";
+import {MapboxService} from "../../services/mapbox.service";
 
 @Component({
   selector: 'app-map',
@@ -34,9 +35,12 @@ export class MapComponent implements OnInit, OnChanges {
   interaction: string;
 
   @Input()
+  activeFeature: any;
+
+  @Input()
   features: any[];
 
-  constructor( private ngRedux: NgRedux<IAppState>) { }
+  constructor( private ngRedux: NgRedux<IAppState>, private mapboxService: MapboxService) { }
 
   interactions: any[];
   vectorLayer: any;
@@ -50,6 +54,8 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
+    console.log(changes);
 
     let newLayers = [];
     if(changes.layers && !changes.layers.isFirstChange()){
@@ -69,13 +75,17 @@ export class MapComponent implements OnInit, OnChanges {
       this.addInteraction(changes.interaction.currentValue);
     }
 
-    if(changes.viewExten && !changes.viewExtent.isFirstChange()){
+    if(changes.viewExtent && !changes.viewExtent.isFirstChange()){
       this.zoomToExtent(this.viewExtent);
     }
 
     if(changes.features && !changes.features.isFirstChange()){
       this.vectorLayer.getSource().clear();
       this.vectorLayer.getSource().addFeatures(this.features);
+    }
+
+    if(changes.activeFeature && !changes.activeFeature.isFirstChange() && changes.activeFeature.previousValue !== changes.activeFeature.currentValue){
+      this.zoomToExtent(this.activeFeature.getGeometry().getExtent());
     }
 
   }
@@ -163,7 +173,22 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   drawEnd(feature: any){
-    console.log(feature);
+
+    if(this.interaction == 'point'){
+      let coordinates = feature.getGeometry().getCoordinates();
+      coordinates = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+      this.mapboxService.reverseGeocode(coordinates[0], coordinates[1]).subscribe(data =>{
+         let address = {};
+
+        data['features'].forEach(feature => {
+          address[this.capitalizeFirstLetter(feature.place_type[0])] = feature.place_name;
+        });
+
+        feature.setProperties({'Address': address});
+
+      })
+    }
+
     this.ngRedux.dispatch({
       type: LayerActions.ADD_FEATURE,
       body:{
@@ -171,6 +196,10 @@ export class MapComponent implements OnInit, OnChanges {
         type: this.interaction
       }
     })
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   removeInteraction(type: string){
@@ -193,8 +222,10 @@ export class MapComponent implements OnInit, OnChanges {
   }
   zoomToExtent(extent: number[]){
     if(extent != null)
-      this.map.getView().fit(extent, this.map.getSize());
+      this.map.getView().fit(extent, {size: this.map.getSize(), maxZoom: 16});
   }
+
+
 
   addLayers(layers: any[]){
     layers.forEach(layerInfo => {

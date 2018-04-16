@@ -5,6 +5,7 @@ import {ToolBoxActions} from "../../../actions/toolbox.action";
 import {select} from "@angular-redux/store";
 import * as ol from 'openlayers';
 import {LayerActions} from "../../../actions/layers.action";
+import {MapboxService} from "../../../services/mapbox.service";
 
 @Component({
   selector: 'app-draw',
@@ -15,7 +16,7 @@ export class DrawComponent implements OnInit {
 
   @select() layers;
 
-  constructor( private ngRedux: NgRedux<IAppState>) { }
+  constructor( private ngRedux: NgRedux<IAppState>, private mapboxService: MapboxService) { }
 
   drawAction: string;
   featureList: any[];
@@ -81,6 +82,16 @@ export class DrawComponent implements OnInit {
       body:{
         features: featureList,
         type: 'custom'
+      }
+    })
+  }
+
+  selectFeature(feature: any){
+    this.ngRedux.dispatch({
+      type: LayerActions.SELECT_FEATURE,
+      body:{
+        feature: feature,
+        type: this.drawAction
       }
     })
   }

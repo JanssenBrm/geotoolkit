@@ -2,17 +2,21 @@
 
 h1{
   margin-bottom: 1.5rem;
+  font-weight:bold;
 }
 
 h2{
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight:bold;
   margin-bottom: 1rem;
   margin-top:1rem;
 }
 
 h3{
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  font-weight:bold;
   margin-bottom:1rem;
+  margin-top:1rem;
 }
 
 
@@ -23,6 +27,14 @@ h3{
   padding: 0.5rem;
   border-radius: $alert-radius;
   word-wrap: break-word;
+}
+
+.featureInfo:hover{
+  background-color: $highlight-hover-color;
+}
+
+.active{
+ background-color: $highlight-hover-color;
 }
 
 .projection{
@@ -86,4 +98,9 @@ textarea {
   width: 100%;
   height: 57rem;
   border: none;
+}
+
+th{
+  font-weight:bold;
+  text-align:left;
 }
