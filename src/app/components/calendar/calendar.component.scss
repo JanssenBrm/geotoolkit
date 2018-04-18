@@ -1,0 +1,15 @@
+:host{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-left{
+  margin-right: 2.5rem;
+  cursor: pointer;
+}
+.action-right{
+  margin-left: 2.5rem;
+  cursor:pointer;
+}

@@ -1,0 +1,13 @@
+<div class="action-left" (click)="selectPreviousDay()">
+  <i class="fa fa-chevron-left fa-2x" aria-hidden="true"></i>
+</div>
+<div>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" placeholder="Choose a date" [value]="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div class="action-right" (click)="selectNextDay()">
+  <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
+</div>

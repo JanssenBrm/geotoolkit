@@ -6,7 +6,6 @@ import {NgRedux, NgReduxModule} from '@angular-redux/store';
 import { AppComponent } from './app.component';
 
 import {IAppState, rootReducer, INITIAL_STATE} from '../app/reducers/root.reducer';
-import {AppResolver} from "./app.resolver";
 import {MainComponent} from "./components/main/main.component";
 import { MapComponent } from './components/map/map.component';
 import {LayerService} from "./services/layer.service";
@@ -22,6 +21,14 @@ import {HttpModule} from "@angular/http";
 import { DrawComponent } from './components/sidebar/draw/draw.component';
 import {MapboxService} from "./services/mapbox.service";
 import { KeysPipe } from './pipes/keys.pipe';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import {
+  MatDatepickerModule,
+  MatIconModule,
+  MatInputModule,
+  MatToolbarModule,
+  MatNativeDateModule,
+} from '@angular/material';
 
 
 const routes: Routes = [
@@ -47,7 +54,8 @@ const routes: Routes = [
     SidebarComponent,
     LayerselectionComponent,
     DrawComponent,
-    KeysPipe
+    KeysPipe,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +63,13 @@ const routes: Routes = [
     NgReduxModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatInputModule,
+    MatToolbarModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
   providers: [
     LayerService,
