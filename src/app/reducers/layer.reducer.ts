@@ -1,8 +1,10 @@
 import {LayerActions} from "../actions/layers.action";
+import * as ol from 'openlayers';
 
 export interface LayerState {
   backgroundLayers: any[],
   layers: any[],
+  layerDates: any[],
   extent: number[],
   features: any[];
   crs: string;
@@ -12,6 +14,7 @@ export interface LayerState {
 export const l_init_state: LayerState = {
   backgroundLayers: [],
   layers: [],
+  layerDates: [],
   extent: null,
   features: [],
   crs: 'EPSG:3857',
@@ -51,7 +54,8 @@ export function layerReducer(state = l_init_state, action) {
       console.log("LAYER REDUCER", "Adding layers", action);
       const newLayers = state.layers.concat(action.body);
       state = Object.assign({}, state, {
-        layers: newLayers
+        layers: newLayers,
+        layerDates: []
       });
 
       break;
@@ -123,6 +127,55 @@ export function layerReducer(state = l_init_state, action) {
       });
 
       break;
+
+    case LayerActions.SELECT_DATE:
+
+      console.log("LAYER REDUCER", "Load date", action);
+
+
+      state.layers.forEach(info => {
+        info.layers.forEach( layer => {
+          if(layer.layer.getVisible()) {
+
+            const date = getTime(action.body.date, layer.times);
+
+            if (layer.layer.getSource() instanceof ol.source.ImageWMS || layer.layer.getSource() instanceof ol.source.TileWMS) {
+              let params = (<ol.source.ImageWMS>layer.layer.getSource()).getParams();
+              params['TIME'] = (date ? date : action.body.date);
+              (<ol.source.ImageWMS>layer.layer.getSource()).updateParams(params);
+            } else if (layer.layer.getSource() instanceof ol.source.WMTS) {
+              const dimensions = (<ol.source.WMTS>layer.layer.getSource()).getDimensions();
+              (<any>dimensions).TIME = (date ? date : action.body.date);
+              (<ol.source.WMTS>layer.layer.getSource()).updateDimensions(dimensions);
+            }
+
+            if (!date) {
+              console.log("Could not find date " + date + " for layer " + layer.name);
+            }
+          }
+
+        })
+      });
+
+      break;
   }
   return state;
+}
+
+function getTime(date: string, times: string[]){
+
+  let layerDate = null;
+  for ( let time of times) {
+    const d = new Date(time);
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    const timeDate = d.getFullYear() + "-" + ( month < 10 ? '0' : '') + month + "-" + (day < 10 ? '0' : '') + day;
+
+    if ( timeDate === date ){
+      layerDate = time;
+      break;
+    }
+  };
+
+  return layerDate;
 }

@@ -1,7 +1,7 @@
 <app-map *ngIf="(layers | async).backgroundLayers.length > 0" [interaction]="(ui | async).activeSelection" [backgroundLayers]="(layers | async).backgroundLayers" [layers]="(layers | async).layers" [extent]="[-46.933594,16.636192,85.781250,72.867930]" [viewExtent]="(layers | async ).extent" [activeFeature]="(layers | async ).activeFeature" [features]="features"></app-map>
 
-<div class="calendar">
-  <app-calendar></app-calendar>
+<div class="calendar" *ngIf="(ui | async).calendarDates.length > 0">
+  <app-calendar [dateranges]="(ui | async).calendarDates"></app-calendar>
 </div>
 <div class="sidebar">
   <app-sidebar *ngIf="(ui | async).activeAction" [action]="(ui | async).activeAction"></app-sidebar>

@@ -58,7 +58,15 @@ export class LayerService {
 
     capabilities.Contents.Layer.forEach(layer =>{
 
+      console.log(layer);
       try {
+        const timeDim = layer.Dimension.find(dimension =>  dimension.Identifier.toUpperCase() === 'TIME');
+        let times = [];
+
+        if(timeDim){
+          times = timeDim.Value;
+        }
+
         const sourceOptions = ol.source.WMTS.optionsFromCapabilities(capabilities, {
           layer: layer.Identifier,
           matrixSet: 'EPSG:3857'
@@ -71,7 +79,8 @@ export class LayerService {
             layer: new ol.layer.Tile({
               source: new ol.source.WMTS((sourceOptions)),
               visible: false
-            })
+            }),
+            times: times
           });
         } else {
           console.error("Layer " + layer.Title + " does not support EPSG:3857");
@@ -91,32 +100,60 @@ export class LayerService {
     capabilities.Capability.Layer.Layer.forEach(layer => {
       if(layer.Layer){
         layer.Layer.forEach(subLayer => {
+
+          try{
+            const timeDim = subLayer.Dimension.find(dimension =>  dimension.name.toUpperCase() === 'TIME');
+            let times = [];
+
+            if(timeDim){
+              times = timeDim.values.split(',');
+            }
+
+            layerList.push({
+              name: subLayer.Name,
+              description: subLayer.Abstract,
+              layer: new ol.layer.Tile({
+                extent: layer.BoundingBox.find(bbox => bbox.crs === 'EPSG:3857').extent,
+                source: new ol.source.TileWMS({
+                  url: getMapURL,
+                  params: {'LAYERS': subLayer.Name, 'TILED': true},
+                }),
+                visible: false,
+                times: times
+              })
+            });
+          }catch(e){
+            console.error("Could not create WMTS layers for " + subLayer.Title);
+          }
+
+        });
+      }else{
+
+        try{
+          const timeDim = layer.Dimension.find(dimension =>  dimension.name.toUpperCase() === 'TIME');
+          let times = [];
+
+          if(timeDim){
+            times = timeDim.values.split(',');
+          }
+
           layerList.push({
-            name: subLayer.Name,
-            description: subLayer.Abstract,
+            name: layer.Name,
+            description: layer.Abstract,
             layer: new ol.layer.Tile({
               extent: layer.BoundingBox.find(bbox => bbox.crs === 'EPSG:3857').extent,
               source: new ol.source.TileWMS({
                 url: getMapURL,
-                params: {'LAYERS': subLayer.Name, 'TILED': true},
+                params: {'LAYERS': layer.Name, 'TILED': true},
               }),
-              visible: false
+              visible:false,
+              times: times
             })
           });
-        });
-      }else{
-        layerList.push({
-          name: layer.Name,
-          description: layer.Abstract,
-          layer: new ol.layer.Tile({
-            extent: layer.BoundingBox.find(bbox => bbox.crs === 'EPSG:3857').extent,
-            source: new ol.source.TileWMS({
-              url: getMapURL,
-              params: {'LAYERS': layer.Name, 'TILED': true},
-            }),
-            visible:false
-          })
-        });
+        } catch(e){
+          console.error("Could not create WMTS layers for " + layer.Title);
+        }
+
       }
     });
     return layerList;

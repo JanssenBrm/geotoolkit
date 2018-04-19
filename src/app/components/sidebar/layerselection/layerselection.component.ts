@@ -4,6 +4,7 @@ import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {IAppState} from "../../../reducers/root.reducer";
 import {LayerActions} from "../../../actions/layers.action";
 import {LayerService} from "../../../services/layer.service";
+import {UIActions} from "../../../actions/ui.action";
 
 @Component({
   selector: 'app-layerselection',
@@ -57,18 +58,42 @@ export class LayerselectionComponent implements OnInit {
   }
 
   toggleLayer(layer: any){
-    layer.setVisible(!layer.getVisible());
+    layer.layer.setVisible(!layer.layer.getVisible());
 
-    if(layer.getVisible()){
+    console.log(layer);
+
+    this.loadTimes();
+
+    if(layer.layer.getVisible()){
+
       this.ngRedux.dispatch({
         type: LayerActions.SET_EXTENT,
         body: {
-          extent: layer.getExtent()
+          extent: layer.layer.getExtent()
         }
       });
     }
 
 
+  }
+
+  loadTimes(){
+
+    let times = []
+    this.layerInfo.forEach(info => {
+      info.layers.forEach(layer =>{
+        if(layer.layer.getVisible()){
+          times.push(layer.times);
+        }
+      })
+    });
+
+    this.ngRedux.dispatch({
+      type: UIActions.SET_CALENDAR_DATES,
+      body: {
+        times: times
+      }
+    });
   }
 
 }

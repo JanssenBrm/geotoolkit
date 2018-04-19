@@ -17,5 +17,5 @@
 </div>
 <div *ngFor="let info of layerInfo" class="externalSource">
   <h3>{{info.url}}</h3>
-  <div *ngFor="let layer of info.layers" class="layerInfo" (click)="toggleLayer(layer.layer)"><div class="toggle"><input type="checkbox" [checked]="layer.layer.getVisible()"></div><span class="info"><span class="title">{{layer.name}}</span><br/><span class="description">{{layer.description}}</span></span></div>
+  <div *ngFor="let layer of info.layers" class="layerInfo" (click)="toggleLayer(layer)"><div class="toggle"><input type="checkbox" [checked]="layer.layer.getVisible()"></div><span class="info"><span class="title">{{layer.name}}</span><br/><span class="description">{{layer.description}}</span></span></div>
 </div>

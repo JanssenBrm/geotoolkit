@@ -4,3 +4,4 @@ export const ToolBoxActions = {
   SELECT_BBOX: 'SELECT_BBOX',
   SET_SELECTION_TYPE: 'SET_SELECTION_TYPE'
 };
+
