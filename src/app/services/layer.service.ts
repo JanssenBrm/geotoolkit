@@ -118,9 +118,9 @@ export class LayerService {
                   url: getMapURL,
                   params: {'LAYERS': subLayer.Name, 'TILED': true},
                 }),
-                visible: false,
-                times: times
-              })
+                visible: false
+              }),
+              times: times
             });
           }catch(e){
             console.error("Could not create WMTS layers for " + subLayer.Title);
@@ -147,8 +147,8 @@ export class LayerService {
                 params: {'LAYERS': layer.Name, 'TILED': true},
               }),
               visible:false,
-              times: times
-            })
+            }),
+            times: times
           });
         } catch(e){
           console.error("Could not create WMTS layers for " + layer.Title);
