@@ -23,6 +23,36 @@ h3{
   border-radius: $alert-radius;
 }
 
+.sourceHeader{
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 1.5rem;
+}
+
+.sourceImage img{
+  border-radius: 50px;
+  height: 40px;
+  margin-right: 1rem;
+  background-color: white;
+  padding: 0.1rem;
+  border: 1px solid #dedede;
+}
+
+.sourceInfo{
+  display: flex;
+  flex-direction: row;
+}
+.sourceInfo .sourceDescription{
+  flex: 3;
+}
+.sourceInfo .sourceLink{
+  text-align: right;
+  padding-right: 0.5rem;
+  margin-left: 1rem;
+}
+
 .layerInfo{
   display:flex;
   flex-direction:row;

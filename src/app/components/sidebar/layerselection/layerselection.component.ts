@@ -5,6 +5,7 @@ import {IAppState} from "../../../reducers/root.reducer";
 import {LayerActions} from "../../../actions/layers.action";
 import {LayerService} from "../../../services/layer.service";
 import {UIActions} from "../../../actions/ui.action";
+import {SOURCES} from "../../../config/sources.config";
 
 @Component({
   selector: 'app-layerselection',
@@ -19,10 +20,12 @@ export class LayerselectionComponent implements OnInit {
 
   backgroundLayers: any[];
   layerInfo: any[];
+  sources: any[];
   status: string;
 
   ngOnInit() {
     this.status = '';
+    this.sources = SOURCES;
     this.layers.subscribe(state =>{
       this.backgroundLayers =  state.backgroundLayers;
       this.layerInfo = state.layers;
@@ -34,6 +37,31 @@ export class LayerselectionComponent implements OnInit {
       type: LayerActions.SELECT_BACKGROUND_LAYER,
       body: layer
     })
+  }
+
+  addSource(event: any){
+    this.status = "Loading source";
+    const source = this.sources.find(source => source.name === event);
+
+    this.layerService.loadExternalLayers(source.url).subscribe(layers => {
+      this.status = "";
+      this.ngRedux.dispatch({
+        type: LayerActions.ADD_LAYERS,
+        body: {
+          name: source.name,
+          description: source.description,
+          url: source.url,
+          infoUrl: source.infoUrl,
+          imageUrl: source.imageUrl,
+          layers: layers
+        }
+      });
+    },error => {
+      this.status = `An error occurred - ${error.message}`;
+    });
+
+    event.value = "";
+
   }
 
   loadExternalSource(event: any){
@@ -48,7 +76,6 @@ export class LayerselectionComponent implements OnInit {
           layers: layers
         }
       });
-      console.log("layers", layers);
     },
       error => {
           this.status = `An error occurred - ${error.message}`;

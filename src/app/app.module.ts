@@ -29,6 +29,7 @@ import {
   MatToolbarModule,
   MatNativeDateModule,
 } from '@angular/material';
+import { LayerSortPipe } from './pipes/layersort.pipe';
 
 
 const routes: Routes = [
@@ -55,7 +56,8 @@ const routes: Routes = [
     LayerselectionComponent,
     DrawComponent,
     KeysPipe,
-    CalendarComponent
+    CalendarComponent,
+    LayerSortPipe
   ],
   imports: [
     BrowserModule,

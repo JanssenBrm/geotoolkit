@@ -5,8 +5,17 @@
   <option *ngFor="let layer of backgroundLayers">{{layer.name}}</option>
 </select>
 
+<h2>Predefined sources</h2>
+<select (change)="addSource($event.target.value)">
+  <option disabled selected value> Select a source </option>
+  <option *ngFor="let layer of sources">{{layer.name}}</option>
+</select>
+
+
 <h2>External source:</h2>
 <input type="text" placeholder="Capabilities URL" (change)="loadExternalSource($event.target)">
+
+<h2>Layers</h2>
 <div *ngIf="status != ''" class="status {{status.indexOf('error') >= 0 ? 'error' : ''}}">
   <div class="statusIcon">
     <i *ngIf="status.indexOf('Loading') >= 0" class="fa fa-circle-o-notch fa-spin"></i><i *ngIf="status.indexOf('error') >= 0" class="fa fa-exclamation-circle"></i>
@@ -15,7 +24,19 @@
     {{status}}
   </div>
 </div>
-<div *ngFor="let info of layerInfo" class="externalSource">
-  <h3>{{info.url}}</h3>
-  <div *ngFor="let layer of info.layers" class="layerInfo" (click)="toggleLayer(layer)"><div class="toggle"><input type="checkbox" [checked]="layer.layer.getVisible()"></div><span class="info"><span class="title">{{layer.name}}</span><br/><span class="description">{{layer.description}}</span></span></div>
+<div *ngFor="let info of layerInfo " class="externalSource">
+  <div class="sourceHeader">
+    <div class="sourceImage">
+      <img [src]="info.imageUrl ? info.imageUrl : '/assets/images/default.png'"/>
+    </div>
+    <div class="sourceData">
+      <h3>{{info.name ? info.name : info.url}}</h3>
+      <div class="sourceInfo">
+        <div class="sourceDescription" *ngIf="info.description">{{info.description}}</div>
+        <div class="sourceLink" *ngIf="info.infoUrl"><a href='{{info.infoUrl}}' target="_blank"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a></div>
+      </div>
+    </div>
+  </div>
+  <h3>Available layers</h3>
+  <div *ngFor="let layer of info.layers  | layerSort " class="layerInfo" (click)="toggleLayer(layer)"><div class="toggle"><input type="checkbox" [checked]="layer.layer.getVisible()"></div><span class="info"><span class="title">{{layer.name}}</span><br/><span class="description">{{layer.description}}</span></span></div>
 </div>

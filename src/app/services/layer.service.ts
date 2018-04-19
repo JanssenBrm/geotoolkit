@@ -60,7 +60,7 @@ export class LayerService {
 
       console.log(layer);
       try {
-        const timeDim = layer.Dimension.find(dimension =>  dimension.Identifier.toUpperCase() === 'TIME');
+        const timeDim = layer.Dimension ? layer.Dimension.find(dimension =>  dimension.Identifier.toUpperCase() === 'TIME') : null;
         let times = [];
 
         if(timeDim){
@@ -102,7 +102,7 @@ export class LayerService {
         layer.Layer.forEach(subLayer => {
 
           try{
-            const timeDim = subLayer.Dimension.find(dimension =>  dimension.name.toUpperCase() === 'TIME');
+            const timeDim = subLayer.Dimension ? subLayer.Dimension.find(dimension =>  dimension.name.toUpperCase() === 'TIME') : null;
             let times = [];
 
             if(timeDim){
@@ -130,7 +130,8 @@ export class LayerService {
       }else{
 
         try{
-          const timeDim = layer.Dimension.find(dimension =>  dimension.name.toUpperCase() === 'TIME');
+
+          const timeDim = layer.Dimension ? layer.Dimension.find(dimension =>  dimension.name.toUpperCase() === 'TIME') : null;
           let times = [];
 
           if(timeDim){
