@@ -29,6 +29,15 @@ export class LayerselectionComponent implements OnInit {
     this.layers.subscribe(state =>{
       this.backgroundLayers =  state.backgroundLayers;
       this.layerInfo = state.layers;
+
+      if(state.times.length > 0){
+        this.ngRedux.dispatch({
+          type: UIActions.SET_CALENDAR_DATES,
+          body: {
+            times: state.times
+          }
+        });
+      }
     });
   }
 
@@ -85,42 +94,13 @@ export class LayerselectionComponent implements OnInit {
   }
 
   toggleLayer(layer: any){
-    layer.layer.setVisible(!layer.layer.getVisible());
-
-    console.log(layer);
-
-    this.loadTimes();
-
-    if(layer.layer.getVisible()){
-
-      this.ngRedux.dispatch({
-        type: LayerActions.SET_EXTENT,
-        body: {
-          extent: layer.layer.getExtent()
-        }
-      });
-    }
-
-
-  }
-
-  loadTimes(){
-
-    let times = []
-    this.layerInfo.forEach(info => {
-      info.layers.forEach(layer =>{
-        if(layer.layer.getVisible()){
-          times.push(layer.times);
-        }
-      })
-    });
-
     this.ngRedux.dispatch({
-      type: UIActions.SET_CALENDAR_DATES,
+      type: LayerActions.TOGGLE_LAYER,
       body: {
-        times: times
+        layer: layer
       }
     });
   }
+
 
 }

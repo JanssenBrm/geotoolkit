@@ -60,17 +60,24 @@ export class LayerService {
 
       console.log(layer);
       try {
-        const timeDim = layer.Dimension ? layer.Dimension.find(dimension =>  dimension.Identifier.toUpperCase() === 'TIME') : null;
+        const timeDim = layer.Dimension ? layer.Dimension.find(dimension =>  dimension.Identifier ? dimension.Identifier.toUpperCase() === 'TIME' : Date.parse(dimension.Default)) : null;
         let times = [];
 
         if(timeDim){
           times = timeDim.Value;
         }
 
-        const sourceOptions = ol.source.WMTS.optionsFromCapabilities(capabilities, {
+        let sourceOptions = ol.source.WMTS.optionsFromCapabilities(capabilities, {
           layer: layer.Identifier,
           matrixSet: 'EPSG:3857'
         });
+
+        if(!sourceOptions){
+          sourceOptions = ol.source.WMTS.optionsFromCapabilities(capabilities, {
+            layer: layer.Identifier,
+            matrixSet: 'EPSG:4326'
+          });
+        }
 
         if (sourceOptions) {
           layerList.push({

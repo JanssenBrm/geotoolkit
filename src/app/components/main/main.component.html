@@ -3,6 +3,9 @@
 <div class="calendar" *ngIf="(ui | async).calendarDates.length > 0">
   <app-calendar [dateranges]="(ui | async).calendarDates"></app-calendar>
 </div>
+<div class="legend" *ngIf="(layers | async).layers.length > 0">
+  <app-legend [layers]="(layers | async).layers"></app-legend>
+</div>
 <div class="sidebar">
   <app-sidebar *ngIf="(ui | async).activeAction" [action]="(ui | async).activeAction"></app-sidebar>
   <app-toolbox></app-toolbox>

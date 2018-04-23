@@ -25,3 +25,19 @@
   padding-top: 1.5rem;
   box-shadow: $default-box-shadow;
 }
+
+.legend{
+  position: absolute;
+  top: 2rem;
+  right: 0rem;
+  background-color: $primary-color;
+  color: $secondary-color;
+  -webkit-border-bottom-left-radius: 0.5rem;
+  -webkit-border-top-left-radius: 0.5rem;
+  -moz-border-radius-bottomleft: 0.5rem;
+  -moz-border-radius-topleft: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  padding:1rem 2rem;
+  box-shadow: $default-box-shadow;
+}

@@ -1,14 +1,17 @@
 import {LayerActions} from "../actions/layers.action";
 import * as ol from 'openlayers';
+import {UIActions} from "../actions/ui.action";
+import {uiReducer} from "./ui.reducer";
 
 export interface LayerState {
   backgroundLayers: any[],
   layers: any[],
   layerDates: any[],
   extent: number[],
-  features: any[];
-  crs: string;
-  activeFeature: any;
+  features: any[],
+  crs: string,
+  activeFeature: any,
+  times: any[]
 }
 
 export const l_init_state: LayerState = {
@@ -19,6 +22,7 @@ export const l_init_state: LayerState = {
   features: [],
   crs: 'EPSG:3857',
   activeFeature: null,
+  times: []
 };
 
 export function layerReducer(state = l_init_state, action) {
@@ -158,8 +162,49 @@ export function layerReducer(state = l_init_state, action) {
       });
 
       break;
+
+    case LayerActions.TOGGLE_LAYER:
+
+      console.log("LAYER REDUCER", "Toggle layer", action);
+
+      const layer = action.body.layer;
+
+      layer.layer.setVisible(!layer.layer.getVisible());
+
+      const times = loadTimes(state.layers);
+
+      if(layer.layer.getVisible()){
+
+        layerReducer(state,{
+          type: LayerActions.SET_EXTENT,
+          body: {
+            extent: layer.layer.getExtent()
+          }
+        });
+      }
+
+      state = Object.assign({}, state, {
+        times: times
+      });
+
+      break;
   }
   return state;
+}
+
+
+function loadTimes(layers: any[]){
+
+  let times = []
+  layers.forEach(info => {
+    info.layers.forEach(layer =>{
+      if(layer.layer.getVisible()){
+        times.push(layer.times);
+      }
+    })
+  });
+
+  return times;
 }
 
 function getTime(date: string, times: string[]){

@@ -1,0 +1,6 @@
+<h3>Active layers</h3>
+<div class="layerList">
+  <div class="layer" *ngFor="let layer of activeLayers" (click)="toggleLayer(layer)">
+    <input type="checkbox" [checked]="layer.layer.getVisible()"><span class="title">{{layer.name}}</span>
+  </div>
+</div>

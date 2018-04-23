@@ -1,0 +1,27 @@
+@import '../../../styles/helpers/variables';
+
+h3{
+  margin-bottom: 1rem;
+}
+.layerList{
+  display:flex;
+  flex-direction: column;
+}
+
+.layer{
+  display:flex;
+  flex-direction:row;
+  padding:0.5rem;
+  border-radius: $alert-radius;
+  align-items: center;
+}
+
+.layer input{
+  margin-right: .5rem;
+}
+
+.layer:hover{
+  background-color: $secondary-color;
+  color: $primary-color;
+  cursor: pointer;
+}

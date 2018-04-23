@@ -30,6 +30,7 @@ import {
   MatNativeDateModule,
 } from '@angular/material';
 import { LayerSortPipe } from './pipes/layersort.pipe';
+import { LegendComponent } from './components/legend/legend.component';
 
 
 const routes: Routes = [
@@ -57,7 +58,8 @@ const routes: Routes = [
     DrawComponent,
     KeysPipe,
     CalendarComponent,
-    LayerSortPipe
+    LayerSortPipe,
+    LegendComponent
   ],
   imports: [
     BrowserModule,
