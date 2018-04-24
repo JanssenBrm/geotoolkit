@@ -169,7 +169,11 @@ export function layerReducer(state = l_init_state, action) {
 
       const layer = action.body.layer;
 
-      layer.layer.setVisible(!layer.layer.getVisible());
+      if(action.body.visible != null){
+        layer.layer.setVisible(action.body.visible);
+      }else{
+        layer.layer.setVisible(!layer.layer.getVisible());
+      }
 
       const times = loadTimes(state.layers);
 
@@ -195,10 +199,11 @@ export function layerReducer(state = l_init_state, action) {
 
 function loadTimes(layers: any[]){
 
-  let times = []
+  let times = [];
   layers.forEach(info => {
     info.layers.forEach(layer =>{
       if(layer.layer.getVisible()){
+        console.log(layer.name, "IS VISIBLE");
         times.push(layer.times);
       }
     })

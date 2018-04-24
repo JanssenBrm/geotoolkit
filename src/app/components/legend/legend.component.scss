@@ -14,6 +14,7 @@ h3{
   padding:0.5rem;
   border-radius: $alert-radius;
   align-items: center;
+  justify-content: stretch;
 }
 
 .layer input{
@@ -24,4 +25,21 @@ h3{
   background-color: $secondary-color;
   color: $primary-color;
   cursor: pointer;
+}
+
+.dnd{
+  margin-right: 1rem;
+}
+
+.actions{
+  margin-left: 1rem;
+}
+
+.layer:hover > label, .layer label:hover{
+  color: $primary-color;
+  cursor: pointer;
+}
+
+label{
+  font-weight: normal;
 }

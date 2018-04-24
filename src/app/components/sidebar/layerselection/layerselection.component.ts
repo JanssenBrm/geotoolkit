@@ -30,14 +30,13 @@ export class LayerselectionComponent implements OnInit {
       this.backgroundLayers =  state.backgroundLayers;
       this.layerInfo = state.layers;
 
-      if(state.times.length > 0){
-        this.ngRedux.dispatch({
-          type: UIActions.SET_CALENDAR_DATES,
-          body: {
-            times: state.times
-          }
-        });
-      }
+      this.ngRedux.dispatch({
+        type: UIActions.SET_CALENDAR_DATES,
+        body: {
+          times: state.times
+        }
+      });
+
     });
   }
 

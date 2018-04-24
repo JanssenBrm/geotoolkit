@@ -1,6 +1,17 @@
 <h3>Active layers</h3>
 <div class="layerList">
-  <div class="layer" *ngFor="let layer of activeLayers" (click)="toggleLayer(layer)">
-    <input type="checkbox" [checked]="layer.layer.getVisible()"><span class="title">{{layer.name}}</span>
-  </div>
+
+  <ul dnd-sortable-container [sortableData]="activeLayers">
+    <li *ngFor="let layer of activeLayers; let i = index" dnd-sortable [sortableIndex]="i" (onDropSuccess)="moveLayer()">
+      <div class="layer" >
+        <i class="dnd fa fa-bars"></i>
+        <input id="{{layer.name + '_' + i}}" type="checkbox" [checked]="layer.layer.getVisible()" (change)="toggleLayer(layer)"><label for="{{layer.name + '_' + i}}"><span class="title">{{layer.name}}</span></label>
+        <div class="actions">
+          <i class="fa fa-remove" (click)="removeLayer(layer)"></i>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+
 </div>

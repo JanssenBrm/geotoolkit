@@ -29,6 +29,7 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "ng2-cookies": "^1.0.12",
+    "ng2-dnd": "^5.0.2",
     "ng2-ion-range-slider": "^1.0.3",
     "open-sans-fontface": "^1.4.0",
     "openlayers": "^4.6.4",

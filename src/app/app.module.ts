@@ -31,6 +31,7 @@ import {
 } from '@angular/material';
 import { LayerSortPipe } from './pipes/layersort.pipe';
 import { LegendComponent } from './components/legend/legend.component';
+import {DndModule} from "ng2-dnd";
 
 
 const routes: Routes = [
@@ -74,6 +75,7 @@ const routes: Routes = [
     MatToolbarModule,
     MatNativeDateModule,
     MatInputModule,
+    DndModule.forRoot()
   ],
   providers: [
     LayerService,

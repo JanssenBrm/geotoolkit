@@ -16,10 +16,15 @@ export class LegendComponent implements OnInit, OnChanges {
   layers: any[];
 
   activeLayers: any[];
+  baseIndex: number;
+  zIndex: number;
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
   ngOnInit() {
+    this.activeLayers = [];
+    this.baseIndex = 1;
+    this.zIndex = this.baseIndex;
     this.parseActiveLayers(this.layers);
   }
 
@@ -29,23 +34,42 @@ export class LegendComponent implements OnInit, OnChanges {
 
   private parseActiveLayers(layers: any[]) {
 
-    this.activeLayers = [];
     layers.forEach(layerInfo => {
         layerInfo.layers.forEach(layer => {
           if(layer.layer.getVisible()){
-            this.activeLayers.push(layer);
+            if(this.activeLayers.indexOf(layer) < 0) {
+              layer.layer.setZIndex(this.zIndex);
+              this.activeLayers.push(layer);
+              this.zIndex++;
+            }
           }
         })
     });
 
   }
 
-  toggleLayer(layer: any){
+  moveLayer(){
+
+    let zIndex = this.baseIndex;
+    this.activeLayers.forEach(layer => {
+        layer.layer.setZIndex(zIndex);
+        zIndex++;
+    });
+  }
+
+  removeLayer(layer){
+    this.toggleLayer(layer, false);
+    this.activeLayers.splice(this.activeLayers.indexOf(layer), 1);
+    this.moveLayer();
+  }
+
+  toggleLayer(layer: any, visible: boolean = null){
 
     this.ngRedux.dispatch({
       type: LayerActions.TOGGLE_LAYER,
       body: {
-        layer: layer
+        layer: layer,
+        visible: visible,
       }
     });
 
