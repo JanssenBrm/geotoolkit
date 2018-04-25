@@ -10,3 +10,6 @@
   <app-sidebar *ngIf="(ui | async).activeAction" [action]="(ui | async).activeAction"></app-sidebar>
   <app-toolbox></app-toolbox>
 </div>
+<div class="progress-bar" *ngIf="(ui | async).loadingTiles !== (ui | async).loadedTiles">
+  <app-progressbar [loadingCount]="(ui | async).loadingTiles" [loadedCount]="(ui | async).loadedTiles"></app-progressbar>
+</div>

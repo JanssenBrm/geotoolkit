@@ -27,11 +27,12 @@ import {
   MatIconModule,
   MatInputModule,
   MatToolbarModule,
-  MatNativeDateModule,
+  MatNativeDateModule, MatProgressBarModule,
 } from '@angular/material';
 import { LayerSortPipe } from './pipes/layersort.pipe';
 import { LegendComponent } from './components/legend/legend.component';
 import {DndModule} from "ng2-dnd";
+import { ProgressbarComponent } from './components/progressbar/progressbar.component';
 
 
 const routes: Routes = [
@@ -60,7 +61,8 @@ const routes: Routes = [
     KeysPipe,
     CalendarComponent,
     LayerSortPipe,
-    LegendComponent
+    LegendComponent,
+    ProgressbarComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +77,7 @@ const routes: Routes = [
     MatToolbarModule,
     MatNativeDateModule,
     MatInputModule,
+    MatProgressBarModule,
     DndModule.forRoot()
   ],
   providers: [

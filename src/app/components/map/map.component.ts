@@ -6,6 +6,7 @@ import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {LayerState} from "../../reducers/layer.reducer";
 import {LayerActions} from "../../actions/layers.action";
 import {MapboxService} from "../../services/mapbox.service";
+import {UIActions} from "../../actions/ui.action";
 
 @Component({
   selector: 'app-map',
@@ -117,6 +118,15 @@ export class MapComponent implements OnInit, OnChanges {
         zoom: this.zoom
       }),
       target: 'map'
+    });
+
+    const redux = this.ngRedux
+    this.map.on('movestart', function(event) {
+      redux.dispatch({
+        type: UIActions.RESET_PROGRESS,
+        body:{
+        }
+      })
     });
     this.setBackgroundLayers();
     this.initInteractions();

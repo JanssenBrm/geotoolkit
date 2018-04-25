@@ -4,11 +4,15 @@ import {Observable} from "rxjs/Observable";
 import {Http} from "@angular/http";
 import * as ol from 'openlayers';
 import {HttpClient} from "@angular/common/http";
+import {LayerActions} from "../actions/layers.action";
+import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
+import {IAppState} from "../reducers/root.reducer";
+import {UIActions} from "../actions/ui.action";
 
 @Injectable()
 export class LayerService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private ngRedux: NgRedux<IAppState>) { }
 
   getLayers(){
     return this.getBackgroundLayers();
@@ -80,7 +84,7 @@ export class LayerService {
         }
 
         if (sourceOptions) {
-          layerList.push({
+          const newLayer = {
             name: layer.Title,
             description: layer.Abstract,
             layer: new ol.layer.Tile({
@@ -88,7 +92,10 @@ export class LayerService {
               visible: false
             }),
             times: times
-          });
+          };
+
+          this.setLayerEvents(newLayer);
+          layerList.push(newLayer);
         } else {
           console.error("Layer " + layer.Title + " does not support EPSG:3857");
         }
@@ -116,7 +123,7 @@ export class LayerService {
               times = timeDim.values.split(',');
             }
 
-            layerList.push({
+            const newLayer = {
               name: subLayer.Name,
               description: subLayer.Abstract,
               layer: new ol.layer.Tile({
@@ -128,7 +135,11 @@ export class LayerService {
                 visible: false
               }),
               times: times
-            });
+            };
+
+            this.setLayerEvents(newLayer);
+            layerList.push(newLayer);
+
           }catch(e){
             console.error("Could not create WMTS layers for " + subLayer.Title);
           }
@@ -145,7 +156,7 @@ export class LayerService {
             times = timeDim.values.split(',');
           }
 
-          layerList.push({
+          const newLayer = {
             name: layer.Name,
             description: layer.Abstract,
             layer: new ol.layer.Tile({
@@ -157,7 +168,10 @@ export class LayerService {
               visible:false,
             }),
             times: times
-          });
+          };
+
+          this.setLayerEvents(newLayer);
+          layerList.push(newLayer);
         } catch(e){
           console.error("Could not create WMTS layers for " + layer.Title);
         }
@@ -167,5 +181,50 @@ export class LayerService {
     return layerList;
   }
 
+  setLayerEvents(layer: any) {
 
+    const redux = this.ngRedux;
+    const http = this.http;
+
+    layer.layer.getSource().setTileLoadFunction((tile, url) => {
+
+
+      redux.dispatch({
+        type: UIActions.SET_PROGRESS, body: {
+          tileLoading: true
+        }
+      });
+
+      const handleTileError = function () {
+        redux.dispatch({
+          type: UIActions.SET_PROGRESS, body: {
+            tileLoaded: true,
+            tileError: true
+          }
+        });
+      };
+
+      const handleTileSucces = function (){
+        redux.dispatch({
+          type: UIActions.SET_PROGRESS, body: {
+            tileLoaded: true
+          }
+        });
+      };
+
+      tile.getImage().onload = handleTileSucces;
+      tile.getImage().onerror = handleTileError;
+      tile.getImage().src = url;
+
+
+    });
+
+    /*layer.layer.getSource().on('tileloadend', function () {
+      redux.dispatch({
+        type: UIActions.SET_PROGRESS, body: {
+          tileLoaded: true
+        }
+      });
+    });*/
+  }
 }
