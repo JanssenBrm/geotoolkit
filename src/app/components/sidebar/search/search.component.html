@@ -1,0 +1,11 @@
+<h1>Search</h1>
+
+<h2>Location</h2>
+
+<input type="text" placeholder="Search for a location" [(ngModel)]="selectedTerm" (focus)="toggleList()" (keyup)="searchLocation()"/>
+<ul *ngIf="showList">
+  <li *ngFor="let item of items" (click)="zoomToResult(item)" class="searchResult">
+    <i class="fa fa-map-marker"></i>
+    {{ item.place_name }}
+  </li>
+</ul>

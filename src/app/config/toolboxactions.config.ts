@@ -8,6 +8,11 @@ export const TOOLBOX_ACTIONS = [
     id: 'DRAW',
     text: 'Draw a geometry on the map',
     icon: 'fa-pencil'
+  },
+  {
+    id: 'SEARCH',
+    text: 'Perform a search on the map',
+    icon: 'fa-search'
   }
 
 ];

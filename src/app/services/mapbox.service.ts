@@ -21,4 +21,11 @@ export class MapboxService {
          return response;
       });
   }
+
+  search(term: string, language = 'en') {
+    let url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${term}.json`;
+    url += `?autocomplete=true&language=${language}&types=place,address&access_token=${this.accessToken}`;
+
+    return this.http.get(url);
+  }
 }

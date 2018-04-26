@@ -121,6 +121,15 @@ export function layerReducer(state = l_init_state, action) {
       }
 
       break;
+    case LayerActions.SET_ACTIVE_FEATURE:
+
+      console.log("LAYER REDUCER", "Setting active feature", action);
+
+      state = Object.assign({}, state, {
+        activeFeature: action.body.feature,
+      });
+
+      break;
 
     case LayerActions.SET_PROJECTION_SYSTEM:
 
