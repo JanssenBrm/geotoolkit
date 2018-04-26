@@ -59,7 +59,7 @@ export class SearchComponent implements OnInit {
       this.showList = false;
     }else{
       this.mapboxService.search(this.selectedTerm).subscribe(items => {
-        this.items = items.features;
+        this.items = (<any> items).features;
         this.showList = true;
       }, err => {
         this.items = [];
