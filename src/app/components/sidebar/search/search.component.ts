@@ -37,7 +37,7 @@ export class SearchComponent implements OnInit {
         feature: new ol.Feature({
           geometry: new ol.geom.Point(ol.proj.transform(feature.geometry.coordinates, 'EPSG:4326', 'EPSG:3857')),
           name: feature.text
-        });
+        })
       }
     })
     this.selectedTerm = feature.place_name;
