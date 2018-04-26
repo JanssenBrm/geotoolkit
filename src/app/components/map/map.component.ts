@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, HostListener, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import * as ol from 'openlayers';
 import {select} from "@angular-redux/store";
 import {IAppState} from "../../reducers/root.reducer";
@@ -7,6 +7,7 @@ import {LayerState} from "../../reducers/layer.reducer";
 import {LayerActions} from "../../actions/layers.action";
 import {MapboxService} from "../../services/mapbox.service";
 import {UIActions} from "../../actions/ui.action";
+import {ToolBoxActions} from "../../actions/toolbox.action";
 
 @Component({
   selector: 'app-map',
@@ -208,12 +209,32 @@ export class MapComponent implements OnInit, OnChanges {
     })
   }
 
+  @HostListener('document:keydown', ['$event'])
+  stopActionKey(event: KeyboardEvent) {
+    if (event.keyCode === 27) {
+      this.stopDrawing();
+    }
+  }
+
+  @HostListener('document:contextmenu', ['$event'])
+  stopActionMouse(event: KeyboardEvent){
+    this.stopDrawing();
+  }
+
+
+  stopDrawing(){
+    this.ngRedux.dispatch({
+      type: ToolBoxActions.STOP_ACTION,
+      body:{
+      }
+    })
+  }
+
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   removeInteraction(type: string){
-
 
     if(type !== null && type !== ''){
       const interaction = this.interactions.find(interaction => interaction.type === type);

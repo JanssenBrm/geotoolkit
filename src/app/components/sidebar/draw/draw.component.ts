@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {IAppState} from "../../../reducers/root.reducer";
 import {ToolBoxActions} from "../../../actions/toolbox.action";
@@ -15,6 +15,7 @@ import {MapboxService} from "../../../services/mapbox.service";
 export class DrawComponent implements OnInit {
 
   @select() layers;
+  @select() ui;
 
   constructor( private ngRedux: NgRedux<IAppState>, private mapboxService: MapboxService) { }
 
@@ -32,7 +33,11 @@ export class DrawComponent implements OnInit {
       state.features.forEach(featureInfo =>{
         this.featureList[featureInfo.type] = featureInfo.features;
       });
-    })
+    });
+
+    this.ui.subscribe(state =>{
+      this.drawAction = state.activeSelection;
+    });
   }
 
   setDrawAction(action: string){

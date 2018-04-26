@@ -29,6 +29,13 @@ export function uiReducer(state = u_init_state, action) {
         activeAction: action.body.action
       });
       break;
+    case ToolBoxActions.STOP_ACTION:
+      console.log("UI REDUCER", "Stopping current action", action);
+
+      state = Object.assign({}, state, {
+        activeSelection: null
+      });
+      break;
 
     case ToolBoxActions.SET_SELECTION_TYPE:
       console.log("UI REDUCER", "Selecting selection type", action);
