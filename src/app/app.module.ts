@@ -33,6 +33,9 @@ import { LayerSortPipe } from './pipes/layersort.pipe';
 import { LegendComponent } from './components/legend/legend.component';
 import {DndModule} from "ng2-dnd";
 import { ProgressbarComponent } from './components/progressbar/progressbar.component';
+import { LayerFilterPipe } from './pipes/layerfilter.pipe';
+import {FormsModule} from "@angular/forms";
+import { SearchComponent } from './components/sidebar/search/search.component';
 
 
 const routes: Routes = [
@@ -62,12 +65,15 @@ const routes: Routes = [
     CalendarComponent,
     LayerSortPipe,
     LegendComponent,
-    ProgressbarComponent
+    ProgressbarComponent,
+    LayerFilterPipe,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, { enableTracing: true } ),
     NgReduxModule,
+    FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     HttpModule,

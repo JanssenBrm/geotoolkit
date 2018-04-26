@@ -22,9 +22,11 @@ export class LayerselectionComponent implements OnInit {
   layerInfo: any[];
   sources: any[];
   status: string;
+  searchFilter: string;
 
   ngOnInit() {
     this.status = '';
+    this.searchFilter = '';
     this.sources = SOURCES;
     this.layers.subscribe(state =>{
       this.backgroundLayers =  state.backgroundLayers;

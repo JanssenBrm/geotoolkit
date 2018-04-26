@@ -6,7 +6,7 @@ h1{
 
 h2{
   font-size: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
   margin-top:1rem;
 }
 
@@ -104,4 +104,26 @@ h3{
   background-color: $alert-background;
   border: $alert-border;
   border-radius: $alert-radius;
+}
+
+.icon-search {
+  position: relative;
+  z-index: 1;
+  left: .75rem;
+  top: 2.25rem;
+  color: #7B7B7B;
+  cursor: pointer;
+  width: 0;
+}
+
+.search-input{
+  padding-left: 2.75rem;
+}
+
+input[type=text]{
+  border-radius: $alert-radius;
+}
+
+.filter-bar{
+  margin-top: -1rem;
 }
