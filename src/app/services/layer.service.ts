@@ -214,17 +214,10 @@ export class LayerService {
 
       tile.getImage().onload = handleTileSucces;
       tile.getImage().onerror = handleTileError;
-      tile.getImage().src = url;
+      tile.getImage().src = decodeURIComponent(url);
 
 
     });
 
-    /*layer.layer.getSource().on('tileloadend', function () {
-      redux.dispatch({
-        type: UIActions.SET_PROGRESS, body: {
-          tileLoaded: true
-        }
-      });
-    });*/
   }
 }
