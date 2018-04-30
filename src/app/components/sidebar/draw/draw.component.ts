@@ -6,6 +6,7 @@ import {select} from "@angular-redux/store";
 import * as ol from 'openlayers';
 import {LayerActions} from "../../../actions/layers.action";
 import {MapboxService} from "../../../services/mapbox.service";
+import {UtilService} from "../../../services/util.service";
 
 @Component({
   selector: 'app-draw',
@@ -17,7 +18,7 @@ export class DrawComponent implements OnInit {
   @select() layers;
   @select() ui;
 
-  constructor( private ngRedux: NgRedux<IAppState>, private mapboxService: MapboxService) { }
+  constructor( private ngRedux: NgRedux<IAppState>, private mapboxService: MapboxService, private utilService: UtilService) { }
 
   drawAction: string;
   featureList: any[];
@@ -101,4 +102,7 @@ export class DrawComponent implements OnInit {
     })
   }
 
+  formatLength(feature){
+    return this.utilService.formatLength(new ol.geom.LineString(feature.getGeometry().getLinearRing(0).getCoordinates()));
+  }
 }

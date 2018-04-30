@@ -8,6 +8,7 @@ import {LayerActions} from "../../actions/layers.action";
 import {MapboxService} from "../../services/mapbox.service";
 import {UIActions} from "../../actions/ui.action";
 import {ToolBoxActions} from "../../actions/toolbox.action";
+import {UtilService} from "../../services/util.service";
 
 @Component({
   selector: 'app-map',
@@ -42,10 +43,13 @@ export class MapComponent implements OnInit, OnChanges {
   @Input()
   features: any[];
 
-  constructor( private ngRedux: NgRedux<IAppState>, private mapboxService: MapboxService) { }
+  constructor( private ngRedux: NgRedux<IAppState>, private mapboxService: MapboxService, private utilService: UtilService) { }
 
   interactions: any[];
   vectorLayer: any;
+
+  measureTooltipElement: any;
+  measureTooltip: any;
 
 
   ngOnInit() {
@@ -129,6 +133,7 @@ export class MapComponent implements OnInit, OnChanges {
         }
       })
     });
+
     this.setBackgroundLayers();
     this.initInteractions();
   }
@@ -176,11 +181,56 @@ export class MapComponent implements OnInit, OnChanges {
       })
     });
 
+    let listener;
+
+    this.createMeasureTooltip();
+
     this.interactions.forEach(interaction =>{
       interaction.interaction.on('drawend', feature => {
         this.drawEnd(feature.feature);
-      })
+      });
+      interaction.interaction.on('drawstart', event => {
+
+        const feature = event.feature;
+
+        listener = feature.getGeometry().on('change', function(evt) {
+          let geom = evt.target;
+          let output;
+          let tooltipCoord;
+          if (geom instanceof ol.geom.Polygon) {
+            output = `<table><tr><th>Area:</th><td>${this.utilService.formatArea(geom)}</td></tr><tr><th>Perimeter:</th><td>${this.utilService.formatLength(new ol.geom.LineString(geom.getLinearRing(0).getCoordinates()))}</td></tr></table>`;
+            tooltipCoord = geom.getInteriorPoint().getCoordinates();
+          } else if (geom instanceof ol.geom.LineString) {
+            output = `<table><tr><th>Distance:</th><td>${this.utilService.formatLength(geom)}</td></tr></table>`;
+            tooltipCoord = geom.getLastCoordinate();
+          } else if (geom instanceof ol.geom.Circle) {
+            output = `<table><tr><th>Radius:</th><td>${this.utilService.formatRadius(geom)}</td></tr><tr><th>Area:</th><td>${this.utilService.formatCircleArea(geom)}</td></tr></table>`;
+            tooltipCoord = geom.getCenter();
+          }
+          this.measureTooltipElement.innerHTML = output;
+          this.measureTooltip.setPosition(tooltipCoord);
+
+          console.log(tooltipCoord, output);
+        }, this);
+
+      }, this);
     });
+  }
+
+  createMeasureTooltip() {
+    if (this.measureTooltipElement) {
+      this.measureTooltipElement.parentNode.removeChild(this.measureTooltipElement);
+    }
+    this.measureTooltipElement = document.createElement('div');
+    this.measureTooltipElement.className = 'tooltip tooltip-measure';
+    this.measureTooltip = new ol.Overlay({
+      element: this.measureTooltipElement,
+      offset: [0, -15],
+      positioning: 'bottom-center',
+      stopEvent: false
+    });
+    this.map.addOverlay(this.measureTooltip);
+    console.log("OVERLAY ADDED", this.measureTooltip, this.measureTooltipElement);
   }
 
   drawEnd(feature: any){
@@ -214,11 +264,6 @@ export class MapComponent implements OnInit, OnChanges {
     if (event.keyCode === 27) {
       this.stopDrawing();
     }
-  }
-
-  @HostListener('document:contextmenu', ['$event'])
-  stopActionMouse(event: KeyboardEvent){
-    this.stopDrawing();
   }
 
 

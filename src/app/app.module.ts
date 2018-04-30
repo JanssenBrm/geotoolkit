@@ -36,6 +36,7 @@ import { ProgressbarComponent } from './components/progressbar/progressbar.compo
 import { LayerFilterPipe } from './pipes/layerfilter.pipe';
 import {FormsModule} from "@angular/forms";
 import { SearchComponent } from './components/sidebar/search/search.component';
+import {UtilService} from "./services/util.service";
 
 
 const routes: Routes = [
@@ -88,7 +89,8 @@ const routes: Routes = [
   ],
   providers: [
     LayerService,
-    MapboxService
+    MapboxService,
+    UtilService
   ],
   bootstrap: [AppComponent]
 })

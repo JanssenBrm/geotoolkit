@@ -104,3 +104,11 @@ th{
   font-weight:bold;
   text-align:left;
 }
+
+th, td{
+  padding: .1rem .5rem;
+}
+
+h3 + p{
+  padding-left: .5rem;
+}

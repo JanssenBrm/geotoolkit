@@ -21,6 +21,17 @@
       <p>
         {{formatFeatureGeometry(feature)}}
       </p>
+      <h3>Properties</h3>
+      <table>
+        <tr>
+          <th>Area:</th>
+          <td [innerHTML]="utilService.formatArea(feature.getGeometry())"></td>
+        </tr>
+        <tr>
+          <th>Perimeter:</th>
+          <td >{{formatLength(feature)}}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
@@ -34,6 +45,17 @@
       <p>
         {{formatFeatureGeometry(feature)}}
       </p>
+      <h3>Properties</h3>
+      <table>
+        <tr>
+          <th>Area:</th>
+          <td [innerHTML]="utilService.formatArea(feature.getGeometry())"></td>
+        </tr>
+        <tr>
+          <th>Perimeter:</th>
+          <td >{{formatLength(feature)}}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
@@ -66,6 +88,17 @@
       <p>
         {{formatFeatureGeometry(feature)}}
       </p>
+      <h3>Properties</h3>
+      <table>
+        <tr>
+          <th>Radius:</th>
+          <td [innerHTML]="utilService.formatRadius(feature.getGeometry())"></td>
+        </tr>
+        <tr>
+          <th>Area:</th>
+          <td [innerHTML]="utilService.formatCircleArea(feature.getGeometry())"></td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
