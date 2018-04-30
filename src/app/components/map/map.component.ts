@@ -61,8 +61,6 @@ export class MapComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    console.log(changes);
-
     let newLayers = [];
     if(changes.layers && !changes.layers.isFirstChange()){
        changes.layers.currentValue.forEach( layerInfo => {
@@ -209,8 +207,6 @@ export class MapComponent implements OnInit, OnChanges {
           }
           this.measureTooltipElement.innerHTML = output;
           this.measureTooltip.setPosition(tooltipCoord);
-
-          console.log(tooltipCoord, output);
         }, this);
 
       }, this);
@@ -230,7 +226,6 @@ export class MapComponent implements OnInit, OnChanges {
       stopEvent: false
     });
     this.map.addOverlay(this.measureTooltip);
-    console.log("OVERLAY ADDED", this.measureTooltip, this.measureTooltipElement);
   }
 
   drawEnd(feature: any){
