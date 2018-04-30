@@ -77,6 +77,9 @@ export class MapComponent implements OnInit, OnChanges {
     if(changes.interaction && !changes.interaction.isFirstChange()){
       this.removeInteraction(changes.interaction.previousValue);
       this.addInteraction(changes.interaction.currentValue);
+      if(this.interaction == ''){
+        this.stopDrawing();
+      }
     }
 
     if(changes.viewExtent && !changes.viewExtent.isFirstChange()){
@@ -181,7 +184,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     let listener;
 
-    this.createMeasureTooltip();
+
 
     this.interactions.forEach(interaction =>{
       interaction.interaction.on('drawend', feature => {
@@ -190,6 +193,11 @@ export class MapComponent implements OnInit, OnChanges {
       interaction.interaction.on('drawstart', event => {
 
         const feature = event.feature;
+
+        if(!this.measureTooltipElement)
+        {
+          this.createMeasureTooltip();
+        }
 
         listener = feature.getGeometry().on('change', function(evt) {
           let geom = evt.target;
@@ -263,6 +271,10 @@ export class MapComponent implements OnInit, OnChanges {
 
 
   stopDrawing(){
+
+    this.map.removeOverlay(this.measureTooltip);
+    this.measureTooltipElement = null;
+
     this.ngRedux.dispatch({
       type: ToolBoxActions.STOP_ACTION,
       body:{
