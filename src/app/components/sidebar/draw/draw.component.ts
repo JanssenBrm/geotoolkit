@@ -102,6 +102,16 @@ export class DrawComponent implements OnInit {
     })
   }
 
+  removeFeature(feature: any){
+    this.ngRedux.dispatch({
+      type: LayerActions.REMOVE_FEATURE,
+      body:{
+        feature: feature,
+        type: this.drawAction
+      }
+    })
+  }
+
   formatLength(feature){
     return this.utilService.formatLength(new ol.geom.LineString(feature.getGeometry().getLinearRing(0).getCoordinates()));
   }

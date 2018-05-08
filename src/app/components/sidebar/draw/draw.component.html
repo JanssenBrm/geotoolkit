@@ -14,7 +14,11 @@
 <div *ngIf="drawAction == 'bbox'">
   <h1>Bounding box</h1>
   <div *ngIf="featureList['bbox']">
-    <div *ngFor="let feature of featureList['bbox']" class="featureInfo" (click)="selectFeature(feature)">
+    <div *ngFor="let feature of featureList['bbox']" class="featureInfo">
+      <div class="actions">
+        <i class="fa fa-map-pin" (click)="selectFeature(feature)"></i>
+        <i class="fa fa-trash" (click)="removeFeature(feature)"></i>
+      </div>
       <h3>Bounding box</h3>
       <p>{{getBoundingBox(feature)}}</p>
       <h3>GeoJSON</h3>
@@ -39,7 +43,11 @@
 <div *ngIf="drawAction == 'polygon'">
   <h1>Polygon</h1>
   <div *ngIf="featureList['polygon']">
-    <div *ngFor="let feature of featureList['polygon']" class="featureInfo" (click)="selectFeature(feature)">
+    <div *ngFor="let feature of featureList['polygon']" class="featureInfo">
+      <div class="actions">
+        <i class="fa fa-map-pin" (click)="selectFeature(feature)"></i>
+        <i class="fa fa-trash" (click)="removeFeature(feature)"></i>
+      </div>
       <h2>Feature</h2>
       <h3>GeoJSON</h3>
       <p>
@@ -63,7 +71,11 @@
 <div *ngIf="drawAction == 'point'">
   <h1>Point</h1>
   <div *ngIf="featureList['point']">
-    <div *ngFor="let feature of featureList['point']" class="featureInfo" (click)="selectFeature(feature)">
+    <div *ngFor="let feature of featureList['point']" class="featureInfo" >
+      <div class="actions">
+        <i class="fa fa-map-pin" (click)="selectFeature(feature)"></i>
+        <i class="fa fa-trash" (click)="removeFeature(feature)"></i>
+      </div>
       <h3>Location</h3>
       <table>
         <tr *ngFor="let info of feature.getProperties()['Address'] | keys" >
@@ -83,7 +95,11 @@
 <div *ngIf="drawAction == 'circle'">
   <h1>Circle</h1>
   <div *ngIf="featureList['circle']">
-    <div *ngFor="let feature of featureList['circle']" class="featureInfo" (click)="selectFeature(feature)">
+    <div *ngFor="let feature of featureList['circle']" class="featureInfo">
+      <div class="actions">
+        <i class="fa fa-map-pin" (click)="selectFeature(feature)"></i>
+        <i class="fa fa-trash" (click)="removeFeature(feature)"></i>
+      </div>
       <h3>GeoJSON</h3>
       <p>
         {{formatFeatureGeometry(feature)}}

@@ -112,3 +112,16 @@ th, td{
 h3 + p{
   padding-left: .5rem;
 }
+
+.actions{
+  float: right;
+  margin-right: .5rem;
+}
+
+.actions i:hover{
+  cursor:pointer;
+}
+
+.actions i{
+  margin-left:0.5rem;
+}

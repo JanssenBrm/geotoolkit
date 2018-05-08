@@ -121,6 +121,19 @@ export function layerReducer(state = l_init_state, action) {
       }
 
       break;
+    case LayerActions.REMOVE_FEATURE:
+
+      console.log("LAYER REDUCER", "Removing feature", action);
+      const rmFeatList = state.features.find(featureInfo => featureInfo.type === action.body.type);
+
+      if(rmFeatList){
+        rmFeatList.features =  rmFeatList.features.filter(feature => feature !== action.body.feature);
+      }
+
+      state = Object.assign({}, state);
+
+
+      break;
     case LayerActions.SET_ACTIVE_FEATURE:
 
       console.log("LAYER REDUCER", "Setting active feature", action);
