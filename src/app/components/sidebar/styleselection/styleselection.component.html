@@ -1,0 +1,10 @@
+<h1>Please select the style to apply</h1>
+<mat-dialog-content>
+<select (change)="setStyle($event)">
+  <option value="" disabled selected>Select the desired style</option>
+  <option *ngFor="let style of data.styles" [value]="style.Name">{{style.Name}}</option>
+</select>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" class="btn btn-primary" (click)="cancel()">Cancel</button>
+</mat-dialog-actions>

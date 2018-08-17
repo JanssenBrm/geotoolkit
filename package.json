@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --prod --base-href /geotoolkit/ && sudo gh-pages -d dist",
+    "start": "ng serve --proxy-config proxy.config.json",
+    "build": "ng build --prod --base-href /geotoolkit/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -57,5 +57,12 @@
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "~2.5.3"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.1.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.vito.local:7999/tui/geotoolkit.git"
+  },
+  "author": ""
 }

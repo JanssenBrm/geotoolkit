@@ -6,6 +6,9 @@ import {LayerActions} from "../../../actions/layers.action";
 import {LayerService} from "../../../services/layer.service";
 import {UIActions} from "../../../actions/ui.action";
 import {SOURCES} from "../../../config/sources.config";
+import {StyleselectionComponent} from "../styleselection/styleselection.component";
+import {MatDialog} from '@angular/material';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-layerselection',
@@ -16,7 +19,7 @@ export class LayerselectionComponent implements OnInit {
 
   @select() layers;
 
-  constructor(private ngRedux: NgRedux<IAppState>, private layerService: LayerService) { }
+  constructor(private ngRedux: NgRedux<IAppState>, private layerService: LayerService, public dialog: MatDialog) { }
 
   backgroundLayers: any[];
   layerInfo: any[];
@@ -95,12 +98,39 @@ export class LayerselectionComponent implements OnInit {
   }
 
   toggleLayer(layer: any){
-    this.ngRedux.dispatch({
-      type: LayerActions.TOGGLE_LAYER,
-      body: {
-        layer: layer
-      }
-    });
+
+    if (!layer.layer.getVisible() && layer.styles && layer.styles.length > 0) {
+
+        const styleSelectionRef = this.dialog.open(StyleselectionComponent, {
+            width: '500px',
+            data: {styles: layer.styles}
+        });
+
+        styleSelectionRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed', result);
+
+            if (!isNullOrUndefined(result)) {
+                const params = layer.layer.getSource().getParams();
+                params.STYLES = result;
+                layer.layer.getSource().updateParams(params);
+
+                this.ngRedux.dispatch({
+                    type: LayerActions.TOGGLE_LAYER,
+                    body: {
+                        layer: layer
+                    }
+                });
+            }
+        });
+
+    } else {
+        this.ngRedux.dispatch({
+            type: LayerActions.TOGGLE_LAYER,
+            body: {
+                layer: layer
+            }
+        });
+    }
   }
 
 
