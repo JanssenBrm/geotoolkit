@@ -2,10 +2,14 @@
   "name": "geotoolkit",
   "version": "0.0.0",
   "license": "MIT",
+  "config": {
+    "basehref": "./"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
-    "build": "ng build --prod --base-href /geotoolkit/",
+    "build": "ng build --prod --base-href $npm_package_config_basehref --output-path geotoolkit",
+    "package": "npm run-script build && cd geotoolkit && tar -zcvf ../geotoolkit.tar.gz .",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

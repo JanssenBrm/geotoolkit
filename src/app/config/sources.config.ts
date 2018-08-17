@@ -21,7 +21,14 @@ export const SOURCES = [
       'url': '/proxy/maps/geoserver/ows?service=wms&version=1.3.0&request=getcapabilities',
       'infoUrl': '',
       'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
-  }
+  },
+/*{
+    'name': 'MAPS (Geowebcache)',
+    'description': 'VITO TAP Maps Cluster',
+    'url': '/proxy/maps/geowebcache/service/wmts?REQUEST=getcapabilities',
+    'infoUrl': '',
+    'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
+}*/
   /*{
     'name': 'Databank Ondergrond Vlaanderen',
     'description': 'DOV zorgt ervoor dat alle gegevens van de Vlaamse ondergrond vlot beschikbaar zijn via één loket, het DOV-Portaal.',
