@@ -5,6 +5,7 @@
     <li *ngFor="let layer of activeLayers; let i = index" dnd-sortable [sortableIndex]="i" (onDropSuccess)="moveLayer()">
       <div class="layer" >
         <i class="dnd fa fa-bars"></i>
+        <i class="fa fa-th {{layer.gridVisible ? 'activeGrid' : ''}} gridIcon" (click)="toggleGridLayer(layer)"></i>
         <input id="{{layer.name + '_' + i}}" type="checkbox" [checked]="layer.layer.getVisible()" (change)="toggleLayer(layer)"><label for="{{layer.name + '_' + i}}"><span class="title">{{layer.name}}</span></label>
         <div class="actions">
           <i class="fa fa-remove" (click)="removeLayer(layer)"></i>

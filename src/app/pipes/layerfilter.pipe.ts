@@ -9,10 +9,12 @@ export class LayerFilterPipe implements PipeTransform {
 
      if(filter){
        return layers.filter( layer => {
-         return layer.name.toUpperCase().includes(filter.toUpperCase());
+         return layer.name.toUpperCase().includes(filter.toUpperCase()) && layer.showInList;
        })
      }else{
-       return layers;
+         return layers.filter( layer => {
+             return layer.showInList;
+         })
      }
   }
 

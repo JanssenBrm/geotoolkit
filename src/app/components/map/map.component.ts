@@ -107,6 +107,7 @@ export class MapComponent implements OnInit, OnChanges {
       zIndex: 99
     });
 
+
     this.map = new ol.Map({
       layers: [this.vectorLayer],
       controls: ol.control.defaults({

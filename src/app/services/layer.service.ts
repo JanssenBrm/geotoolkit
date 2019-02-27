@@ -84,6 +84,7 @@ export class LayerService {
         if (sourceOptions) {
           const newLayer = {
             name: layer.Title,
+            showInList: true,
             description: layer.Abstract,
             baseurl: url,
             layer: new ol.layer.Tile({
@@ -93,8 +94,23 @@ export class LayerService {
             times: times
           };
 
+
+          const tileGridLayer = {
+              name: layer.Title + '_GRID',
+              showInList: false,
+              layer: new ol.layer.Tile({
+                source: new ol.source.TileDebug({
+                    projection: 'EPSG:3857',
+                    tileGrid: new ol.source.WMTS((sourceOptions)).getTileGrid()
+                }),
+                zIndex: 99,
+                visible: false
+            })
+          };
+
           this.setLayerEvents(newLayer);
           layerList.push(newLayer);
+          layerList.push(tileGridLayer);
         } else {
           console.error('Layer ' + layer.Title + ' does not support EPSG:3857');
         }
@@ -127,6 +143,7 @@ export class LayerService {
             const newLayer = {
               name: subLayer.Name,
               description: subLayer.Abstract,
+              showInList: true,
               baseurl: url,
               styles: subLayer.Style,
               layer: new ol.layer.Tile({
@@ -164,6 +181,7 @@ export class LayerService {
           const newLayer = {
             name: layer.Name,
             description: layer.Abstract,
+            showInList: true,
             baseurl: url,
             styles: layer.Style,
             layer: new ol.layer.Tile({
@@ -223,6 +241,7 @@ export class LayerService {
       tile.getImage().onerror = handleTileError;
       const tileUrl = `${layer.baseurl.split('?')[0]}?${url.split('?')[1]}`;
       tile.getImage().src = decodeURIComponent(tileUrl);
+      tile.getImage().style.border = '1px solid black';
 
 
     });

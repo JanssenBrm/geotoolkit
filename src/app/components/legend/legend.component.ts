@@ -36,7 +36,7 @@ export class LegendComponent implements OnInit, OnChanges {
 
     layers.forEach(layerInfo => {
         layerInfo.layers.forEach(layer => {
-          if(layer.layer.getVisible()){
+          if(layer.layer.getVisible() && layer.showInList){
             if(this.activeLayers.indexOf(layer) < 0) {
               layer.layer.setZIndex(this.zIndex);
               this.activeLayers.push(layer);
@@ -73,5 +73,17 @@ export class LegendComponent implements OnInit, OnChanges {
       }
     });
 
+  }
+
+  toggleGridLayer(layer: any, visible: boolean = null){
+    layer.gridVisible = !layer.gridVisible;
+    console.log("LAYER GRID", layer.gridVisible);
+    this.ngRedux.dispatch({
+        type: LayerActions.TOGGLE_GRID_LAYER,
+        body: {
+            layer: layer,
+            visible: visible,
+        }
+    });
   }
 }

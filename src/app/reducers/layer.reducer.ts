@@ -197,10 +197,10 @@ export function layerReducer(state = l_init_state, action) {
         layer.layer.setVisible(!layer.layer.getVisible());
       }
 
+
       const times = loadTimes(state.layers);
 
       if(layer.layer.getVisible()){
-
         layerReducer(state,{
           type: LayerActions.SET_EXTENT,
           body: {
@@ -214,6 +214,24 @@ export function layerReducer(state = l_init_state, action) {
       });
 
       break;
+  case LayerActions.TOGGLE_GRID_LAYER:
+
+      console.log("LAYER REDUCER", "Toggle grid layer", action);
+
+      const layerName = action.body.layer.name;
+
+      state.layers.forEach(list =>  {
+          const gridLayer = list.layers.find(l => l.name === layerName + "_GRID");
+
+          if (gridLayer) {
+              if(action.body.visible != null){
+                  gridLayer.layer.setVisible(action.body.visible);
+              }else{
+                  gridLayer.layer.setVisible(!gridLayer.layer.getVisible());
+              }
+          }
+      } );
+      break;
   }
   return state;
 }
@@ -224,7 +242,7 @@ function loadTimes(layers: any[]){
   let times = [];
   layers.forEach(info => {
     info.layers.forEach(layer =>{
-      if(layer.layer.getVisible()){
+      if(layer.layer.getVisible() && layer.showInList){
         console.log(layer.name, "IS VISIBLE");
         times.push(layer.times);
       }
