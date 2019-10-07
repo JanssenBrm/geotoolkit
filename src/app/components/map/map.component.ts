@@ -110,6 +110,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     this.map = new ol.Map({
       layers: [this.vectorLayer],
+      maxTilesLoading: 128,
       controls: ol.control.defaults({
         attribution: false,
         rotate: false
