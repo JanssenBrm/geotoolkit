@@ -3,10 +3,13 @@ import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {IAppState} from "../../../reducers/root.reducer";
 import {ToolBoxActions} from "../../../actions/toolbox.action";
 import {select} from "@angular-redux/store";
-import * as ol from 'openlayers';
 import {LayerActions} from "../../../actions/layers.action";
 import {MapboxService} from "../../../services/mapbox.service";
 import {UtilService} from "../../../services/util.service";
+
+import { GeoJSON } from 'ol/format';
+import { transformExtent, transform } from 'ol/proj';
+import { LineString } from 'ol/geom';
 
 @Component({
   selector: 'app-draw',
@@ -55,7 +58,7 @@ export class DrawComponent implements OnInit {
 
   formatFeatureGeometry(feature: any){
 
-    const formatter = new ol.format.GeoJSON();
+    const formatter = new GeoJSON();
     return formatter.writeFeature(feature, {
       featureProjection: 'EPSG:3857',
       dataProjection: this.crs
@@ -63,7 +66,7 @@ export class DrawComponent implements OnInit {
   }
 
   getBoundingBox(feature: any){
-    return ol.proj.transformExtent(feature.getGeometry().getExtent(), 'EPSG:3857', this.crs);
+    return transformExtent(feature.getGeometry().getExtent(), 'EPSG:3857', this.crs);
   }
 
   selectProjectionSystem(crs: string){
@@ -77,7 +80,7 @@ export class DrawComponent implements OnInit {
 
   addFeature(feature: any){
 
-    const featureList = (new ol.format.GeoJSON()).readFeatures(feature, {
+    const featureList = (new GeoJSON()).readFeatures(feature, {
       featureProjection: 'EPSG:3857',
       dataProjection: this.crs
     });
@@ -113,6 +116,6 @@ export class DrawComponent implements OnInit {
   }
 
   formatLength(feature){
-    return this.utilService.formatLength(new ol.geom.LineString(feature.getGeometry().getLinearRing(0).getCoordinates()));
+    return this.utilService.formatLength(new LineString(feature.getGeometry().getLinearRing(0).getCoordinates()));
   }
 }

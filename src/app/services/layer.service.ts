@@ -1,13 +1,20 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {BACKGROUND_LAYERS} from '../config/backgroundlayers.config';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Http} from '@angular/http';
-import * as ol from 'openlayers';
 import {HttpClient} from '@angular/common/http';
 import {LayerActions} from '../actions/layers.action';
 import {NgRedux} from '@angular-redux/store/lib/src/components/ng-redux';
 import {IAppState} from '../reducers/root.reducer';
 import {UIActions} from '../actions/ui.action';
+
+
+import {WMSCapabilities, WMTSCapabilities} from 'ol/format';
+import {WMTS, TileDebug, TileWMS} from 'ol/source';
+import {optionsFromCapabilities} from 'ol/source/WMTS';
+import {Tile} from 'ol/layer';
 
 @Injectable()
 export class LayerService {
@@ -28,14 +35,14 @@ export class LayerService {
     let type = '';
 
     if (url.toLowerCase().indexOf('wms') > 0 ) {
-      parser = new ol.format.WMSCapabilities();
+      parser = new WMSCapabilities();
       type = 'WMS';
     } else if (url.toLowerCase().indexOf('wmts') > 0 ) {
-      parser = new ol.format.WMTSCapabilities();
+      parser = new WMTSCapabilities();
       type = 'WMTS';
     }
-    return this.http.get(url, { responseType: 'text' })
-      .map( response => {
+    return this.http.get(url, { responseType: 'text' }).pipe(
+      map( response => {
 
         let result = parser.read(response);
         let layers = [];
@@ -50,7 +57,7 @@ export class LayerService {
 
 
         return layers;
-      });
+      }));
   }
 
   readWMTSCapabilities(capabilities: any, url: any){
@@ -69,13 +76,13 @@ export class LayerService {
           times = timeDim.Value;
         }
 
-        let sourceOptions = ol.source.WMTS.optionsFromCapabilities(capabilities, {
+        let sourceOptions = optionsFromCapabilities(capabilities, {
           layer: layer.Identifier,
           matrixSet: 'EPSG:3857'
         });
 
         if (!sourceOptions) {
-          sourceOptions = ol.source.WMTS.optionsFromCapabilities(capabilities, {
+          sourceOptions = optionsFromCapabilities(capabilities, {
             layer: layer.Identifier,
             matrixSet: 'EPSG:4326'
           });
@@ -87,8 +94,9 @@ export class LayerService {
             showInList: true,
             description: layer.Abstract,
             baseurl: url,
-            layer: new ol.layer.Tile({
-              source: new ol.source.WMTS((sourceOptions)),
+            layer: new Tile({
+              preload: Infinity,
+              source: new WMTS((sourceOptions)),
               visible: false
             }),
             times: times
@@ -98,10 +106,11 @@ export class LayerService {
           const tileGridLayer = {
               name: layer.Title + '_GRID',
               showInList: false,
-              layer: new ol.layer.Tile({
-                source: new ol.source.TileDebug({
+              layer: new Tile({
+                source: new TileDebug({
+                    preload: Infinity,
                     projection: 'EPSG:3857',
-                    tileGrid: new ol.source.WMTS((sourceOptions)).getTileGrid()
+                    tileGrid: new WMTS((sourceOptions)).getTileGrid()
                 }),
                 zIndex: 99,
                 visible: false
@@ -146,9 +155,10 @@ export class LayerService {
               showInList: true,
               baseurl: url,
               styles: subLayer.Style,
-              layer: new ol.layer.Tile({
+              layer: new Tile({
+                preload: Infinity,
                 extent: bbox ? bbox.extent : [-20026376.39, -20048966.10, 20026376.39, 20048966.10],
-                source: new ol.source.TileWMS({
+                source: new TileWMS({
                   url: getMapURL,
                   params: {'LAYERS': subLayer.Name, 'TILED': true},
                 }),
@@ -184,9 +194,10 @@ export class LayerService {
             showInList: true,
             baseurl: url,
             styles: layer.Style,
-            layer: new ol.layer.Tile({
+            layer: new Tile({
+              preload: Infinity,
               extent: bbox ? bbox.extent : [-20026376.39, -20048966.10, 20026376.39, 20048966.10],
-              source: new ol.source.TileWMS({
+              source: new TileWMS({
                 url: getMapURL,
                 params: {'LAYERS': layer.Name, 'TILED': true},
               }),

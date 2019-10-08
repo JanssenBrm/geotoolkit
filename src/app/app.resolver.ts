@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {IAppState} from "./reducers/root.reducer";
 import {NgRedux} from '@angular-redux/store/lib/src/components/ng-redux';
 import {LayerService} from "./services/layer.service";

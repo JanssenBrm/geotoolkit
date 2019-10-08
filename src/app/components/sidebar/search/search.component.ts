@@ -3,7 +3,10 @@ import {MapboxService} from "../../../services/mapbox.service";
 import {LayerActions} from "../../../actions/layers.action";
 import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {IAppState} from "../../../reducers/root.reducer";
-import * as ol from 'openlayers';
+
+import { Feature } from 'ol';
+import { Point } from 'ol/geom';
+import { transform } from 'ol/proj';
 
 @Component({
   selector: 'app-search',
@@ -34,8 +37,8 @@ export class SearchComponent implements OnInit {
     this.ngRedux.dispatch({
       type: LayerActions.SET_ACTIVE_FEATURE,
       body:{
-        feature: new ol.Feature({
-          geometry: new ol.geom.Point(ol.proj.transform(feature.geometry.coordinates, 'EPSG:4326', 'EPSG:3857')),
+        feature: new Feature({
+          geometry: new Point(transform(feature.geometry.coordinates, 'EPSG:4326', 'EPSG:3857')),
           name: feature.text
         })
       }

@@ -17,7 +17,6 @@
 
 <h2>Layers</h2>
 <div class="filter-bar">
-  <i class="icon-search fa fa-search fa-lg"></i>
   <input type="text" class="search-input" placeholder="Filter layers" [(ngModel)]="searchFilter"/>
 </div>
 <div *ngIf="status != ''" class="status {{status.indexOf('error') >= 0 ? 'error' : ''}}">

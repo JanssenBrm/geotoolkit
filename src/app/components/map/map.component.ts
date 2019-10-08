@@ -1,5 +1,4 @@
 import {Component, HostListener, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import * as ol from 'openlayers';
 import {select} from "@angular-redux/store";
 import {IAppState} from "../../reducers/root.reducer";
 import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
@@ -9,6 +8,16 @@ import {MapboxService} from "../../services/mapbox.service";
 import {UIActions} from "../../actions/ui.action";
 import {ToolBoxActions} from "../../actions/toolbox.action";
 import {UtilService} from "../../services/util.service";
+
+import { transformExtent, transform } from 'ol/proj';
+import { getCenter } from 'ol/extent';
+import { Vector } from 'ol/layer';
+import { Vector as VectorSource } from 'ol/source';
+import { Map, View, Overlay } from 'ol';
+import { defaults, ZoomToExtent, ScaleLine} from 'ol/control';
+import { Draw } from 'ol/interaction'; 
+import { Polygon, LineString, Circle } from 'ol/geom';
+import { createBox } from 'ol/interaction/Draw';
 
 @Component({
   selector: 'app-map',
@@ -99,28 +108,28 @@ export class MapComponent implements OnInit, OnChanges {
 
 
   initMap(){
-    let extent = ol.proj.transformExtent(this.extent, /* WGS84 */ 'EPSG:4326', /* MERCATOR */ 'EPSG:3857');
-    let center = ol.extent.getCenter(extent);
+    let extent = transformExtent(this.extent, /* WGS84 */ 'EPSG:4326', /* MERCATOR */ 'EPSG:3857');
+    let center = getCenter(extent);
 
-    this.vectorLayer = new ol.layer.Vector({
-      source: new ol.source.Vector({features: this.features, wrapX: false}),
+    this.vectorLayer = new Vector({
+      source: new VectorSource({features: this.features, wrapX: false}),
       zIndex: 99
     });
 
 
-    this.map = new ol.Map({
+    this.map = new Map({
       layers: [this.vectorLayer],
       maxTilesLoading: 128,
-      controls: ol.control.defaults({
+      controls: defaults({
         attribution: false,
         rotate: false
       }).extend([
-        new ol.control.ZoomToExtent({
+        new ZoomToExtent({
           extent: extent
         }),
-        new ol.control.ScaleLine()
+        new ScaleLine()
       ]),
-      view: new ol.View({
+      view: new View({
         projection: 'EPSG:3857',
         center: center,
         zoom: this.zoom
@@ -153,16 +162,16 @@ export class MapComponent implements OnInit, OnChanges {
     this.interactions = [];
     this.interactions.push({
       type: 'bbox',
-      interaction: new ol.interaction.Draw({
+      interaction: new Draw({
         source: this.vectorLayer.getSource(),
         type: 'Circle',
-        geometryFunction: ol.interaction.Draw.createBox()
+        geometryFunction: createBox()
       })
     });
 
     this.interactions.push({
       type: 'polygon',
-      interaction:   new ol.interaction.Draw({
+      interaction:   new Draw({
         source: this.vectorLayer.getSource(),
         type: 'Polygon'
       })
@@ -170,7 +179,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     this.interactions.push({
       type: 'point',
-      interaction:   new ol.interaction.Draw({
+      interaction:   new Draw({
         source: this.vectorLayer.getSource(),
         type: 'Point'
       })
@@ -178,7 +187,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     this.interactions.push({
       type: 'circle',
-      interaction:   new ol.interaction.Draw({
+      interaction:   new Draw({
         source: this.vectorLayer.getSource(),
         type: 'Circle'
       })
@@ -201,17 +210,17 @@ export class MapComponent implements OnInit, OnChanges {
           this.createMeasureTooltip();
         }
 
-        listener = feature.getGeometry().on('change', function(evt) {
+        listener = feature.getGeometry().on('change', (evt) => {
           let geom = evt.target;
           let output;
           let tooltipCoord;
-          if (geom instanceof ol.geom.Polygon) {
-            output = `<table><tr><th>Area:</th><td>${this.utilService.formatArea(geom)}</td></tr><tr><th>Perimeter:</th><td>${this.utilService.formatLength(new ol.geom.LineString(geom.getLinearRing(0).getCoordinates()))}</td></tr></table>`;
+          if (geom instanceof Polygon) {
+            output = `<table><tr><th>Area:</th><td>${this.utilService.formatArea(geom)}</td></tr><tr><th>Perimeter:</th><td>${this.utilService.formatLength(new LineString(geom.getLinearRing(0).getCoordinates()))}</td></tr></table>`;
             tooltipCoord = geom.getInteriorPoint().getCoordinates();
-          } else if (geom instanceof ol.geom.LineString) {
+          } else if (geom instanceof LineString) {
             output = `<table><tr><th>Distance:</th><td>${this.utilService.formatLength(geom)}</td></tr></table>`;
             tooltipCoord = geom.getLastCoordinate();
-          } else if (geom instanceof ol.geom.Circle) {
+          } else if (geom instanceof Circle) {
             output = `<table><tr><th>Radius:</th><td>${this.utilService.formatRadius(geom)}</td></tr><tr><th>Area:</th><td>${this.utilService.formatCircleArea(geom)}</td></tr></table>`;
             tooltipCoord = geom.getCenter();
           }
@@ -229,7 +238,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
     this.measureTooltipElement = document.createElement('div');
     this.measureTooltipElement.className = 'tooltip tooltip-measure';
-    this.measureTooltip = new ol.Overlay({
+    this.measureTooltip = new Overlay({
       element: this.measureTooltipElement,
       offset: [0, -15],
       positioning: 'bottom-center',
@@ -242,7 +251,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     if(this.interaction == 'point'){
       let coordinates = feature.getGeometry().getCoordinates();
-      coordinates = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+      coordinates = transform(coordinates, 'EPSG:3857', 'EPSG:4326');
       this.mapboxService.reverseGeocode(coordinates[0], coordinates[1]).subscribe(data =>{
          let address = {};
 

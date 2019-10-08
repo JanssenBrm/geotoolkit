@@ -1,10 +1,10 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {BACKGROUND_LAYERS} from "../config/backgroundlayers.config";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {Http} from "@angular/http";
-import * as ol from 'openlayers';
 import {HttpClient} from "@angular/common/http";
-import {baseBuildCommandOptions} from "@angular/cli/commands/build";
 
 @Injectable()
 export class MapboxService {
@@ -16,10 +16,10 @@ export class MapboxService {
 
   reverseGeocode(lat: any, lon: any){
     console.log("REVERSE GEOCODE")
-    return this.http.get(`${this.baseUrl}/geocoding/v5/mapbox.places/${lat},${lon}.json?access_token=${this.accessToken}`)
-      .map(response => {
+    return this.http.get(`${this.baseUrl}/geocoding/v5/mapbox.places/${lat},${lon}.json?access_token=${this.accessToken}`).pipe(
+      map(response => {
          return response;
-      });
+      }));
   }
 
   search(term: string, language = 'en') {

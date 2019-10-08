@@ -7,7 +7,10 @@
 }
 
 .ol-control {
-  position: relative;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  
   button {
     display: block;
     width: $button-small-width;

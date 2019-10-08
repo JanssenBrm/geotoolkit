@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as ol from 'openlayers';
+
+import {getArea, getLength} from 'ol/sphere';
 
 @Injectable()
 export class UtilService {
@@ -34,7 +35,7 @@ export class UtilService {
   }
 
   formatLength(line) {
-    var length = ol.Sphere.getLength(line);
+    var length = getLength(line);
     var output;
     if (length > 100) {
       output = (Math.round(length / 1000 * 100) / 100) +

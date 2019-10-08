@@ -1,7 +1,8 @@
 import {LayerActions} from "../actions/layers.action";
-import * as ol from 'openlayers';
 import {UIActions} from "../actions/ui.action";
 import {uiReducer} from "./ui.reducer";
+
+import { TileWMS, ImageWMS, WMTS } from 'ol/source';
 
 export interface LayerState {
   backgroundLayers: any[],
@@ -165,14 +166,14 @@ export function layerReducer(state = l_init_state, action) {
 
             const date = getTime(action.body.date, layer.times);
 
-            if (layer.layer.getSource() instanceof ol.source.ImageWMS || layer.layer.getSource() instanceof ol.source.TileWMS) {
-              let params = (<ol.source.ImageWMS>layer.layer.getSource()).getParams();
+            if (layer.layer.getSource() instanceof ImageWMS || layer.layer.getSource() instanceof TileWMS) {
+              let params = (<ImageWMS>layer.layer.getSource()).getParams();
               params['TIME'] = (date ? date : action.body.date);
-              (<ol.source.ImageWMS>layer.layer.getSource()).updateParams(params);
-            } else if (layer.layer.getSource() instanceof ol.source.WMTS) {
-              const dimensions = (<ol.source.WMTS>layer.layer.getSource()).getDimensions();
+              (<ImageWMS>layer.layer.getSource()).updateParams(params);
+            } else if (layer.layer.getSource() instanceof WMTS) {
+              const dimensions = (<WMTS>layer.layer.getSource()).getDimensions();
               (<any>dimensions).TIME = (date ? date : action.body.date);
-              (<ol.source.WMTS>layer.layer.getSource()).updateDimensions(dimensions);
+              (<WMTS>layer.layer.getSource()).updateDimensions(dimensions);
             }
 
             if (!date) {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {select} from "@angular-redux/store";
 import {LayerActions} from "../../actions/layers.action";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {LayerService} from "../../services/layer.service";
 import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {IAppState} from "../../reducers/root.reducer";
