@@ -40,7 +40,7 @@ node ('jenkinsslave1.services.rscloud.vito.be || jenkinsslave1.vgt.vito.be || je
         withCredentials([sshUserPrivateKey(credentialsId: '56b58ff6-cbcd-4d83-92fa-390a4da7f00c', keyFileVariable: 'privatekey')]) {
           sh "cp -f $privatekey /home/jenkins/.ssh/webportals_rsa"
 
-          if(['gdd_151'].contains(env.BRANCH_NAME)){
+          if(['develop'].contains(env.BRANCH_NAME)){
             buildAndUploadRpm(package_name, date, rpm_source_dir, rpm_package_prefix, rpm_repo)
             lock ('Deploying to dev'){
               rpm.deploy("${package_name}-${date}-${BUILD_NUMBER}", dev_hosts, after_install_command)
