@@ -2,7 +2,7 @@
 
 def package_name = 'geotoolkit'
 def rpm_package_prefix = '/var/vhosts/geotoolkit'
-def rpm_source_dir = 'dist'
+def rpm_source_dir = 'geotoolkit'
 def date = utils.getDate('yyyyMMddHmmss')
 def dev_hosts = 'webportals-dev.services.rscloud.vito.be'
 def int_hosts = 'webportals-int.services.rscloud.vito.be'
