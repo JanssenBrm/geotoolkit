@@ -50,6 +50,11 @@ node ('jenkinsslave1.services.rscloud.vito.be || jenkinsslave1.vgt.vito.be || je
             lock ('Deploying to prod'){
               rpm.deploy("${package_name}-${date}-${BUILD_NUMBER}", prod_hosts, after_install_command)
             }
+          } else if(isReleaseBranch()) {
+            buildAndUploadRpm(package_name, date, rpm_source_dir, rpm_package_prefix, rpm_repo)
+            lock ('Deploying to int'){
+              rpm.deploy("${package_name}-${date}-${BUILD_NUMBER}", int_hosts, after_install_command)
+            }
           }
         }
       }
