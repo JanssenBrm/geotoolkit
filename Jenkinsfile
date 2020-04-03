@@ -6,7 +6,7 @@ def rpm_source_dir = 'geotoolkit'
 def date = utils.getDate('yyyyMMddHHmmss')
 def dev_hosts = 'webportals-dev.services.rscloud.vito.be'
 def int_hosts = 'webportals-int.services.rscloud.vito.be'
-def prod_hosts = 'webportals-prod.services.rscloud.vito.be'
+def prod_hosts = ['webportals-prod.services.rscloud.vito.be', 'webportals-prod-02.services.rscloud.vito.be']
 def after_install_command = ':'
 def rpm_repo = 'vito-yum-angular'
 
