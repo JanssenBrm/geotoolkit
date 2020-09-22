@@ -1,7 +1,7 @@
 {
   "/proxy/mapcache/*": {
     "target": {
-      "host": "mapcachedev.vgt.vito.be",
+      "host": "mapcache.vgt.vito.be",
       "protocol": "http"
     },
     "secure": false,
@@ -12,7 +12,7 @@
   },
   "/proxy/maps/*": {
     "target": {
-      "host": "mapsdev.vgt.vito.be",
+      "host": "maps.vgt.vito.be",
       "protocol": "http"
     },
     "secure": false,
@@ -23,7 +23,7 @@
   },
   "/proxy/geoserver/*": {
     "target": {
-      "host": "mapcachedev.vgt.vito.be",
+      "host": "mapcache.vgt.vito.be",
       "protocol": "http"
     },
     "secure": false,
@@ -46,7 +46,7 @@
   },
   "/proxy/es_gateway/*": {
     "target": {
-      "host": "es5-gateway-test.vgt.vito.be",
+      "host": "es5-gateway.vgt.vito.be",
       "protocol": "http",
       "port": 8080
     },
@@ -58,7 +58,7 @@
   },
   "/proxy/openam/*": {
     "target": {
-      "host": "openamtest.vgt.vito.be",
+      "host": "openam.vgt.vito.be",
       "protocol": "http",
       "port": 8080
     },
@@ -71,7 +71,7 @@
   },
   "/proxy/es_gateway/*": {
     "target": {
-      "host": "es5-gateway-test.vgt.vito.be",
+      "host": "es5-gateway.vgt.vito.be",
       "protocol": "http",
       "port": 8080
     },
@@ -79,6 +79,18 @@
     "changeOrigin": true,
     "pathRewrite": {
       "^/proxy/es_gateway": ""
+    }
+  },
+  "/proxy/vito-wmts": {
+    "target": {
+      "host": "wmts01-dev.services.rscloud.vito.be",
+      "protocol": "http",
+      "port": 8080
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/proxy/vito-wmts": ""
     }
   }
 }
