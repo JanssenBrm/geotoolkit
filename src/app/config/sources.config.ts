@@ -28,12 +28,27 @@ export const SOURCES = [
     'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
   },
   {
-      'name': 'MAPS (WMS)',
+      'name': 'MAPS - CECN (WMS)',
       'description': 'VITO TAP Maps Cluster',
-      'url': 'http://maps.vgt.vito.be/geoserver/ows?service=wms&version=1.3.0&request=getcapabilities',
+      'url': 'http://maps.vgt.vito.be/geoserver/CECN/ows?service=wms&version=1.3.0&request=getcapabilities',
       'infoUrl': '',
       'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
-  }, {
+  },
+    {
+        'name': 'MAPS - DCS4COP (WMS)',
+        'description': 'VITO TAP Maps Cluster',
+        'url': 'http://maps.vgt.vito.be/geoserver/DCS4COP/ows?service=wms&version=1.3.0&request=getcapabilities',
+        'infoUrl': '',
+        'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
+    },
+    {
+        'name': 'MAPS - DATABIO (WMS)',
+        'description': 'VITO TAP Maps Cluster',
+        'url': 'http://maps.vgt.vito.be/geoserver/DATABIO/ows?service=wms&version=1.3.0&request=getcapabilities',
+        'infoUrl': '',
+        'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
+    },
+    {
     'name': 'MAPS (Geowebcache)',
     'description': 'VITO TAP Maps Cluster',
     'url': 'http://maps.vgt.vito.be/geowebcache/service/wmts?REQUEST=getcapabilities',
