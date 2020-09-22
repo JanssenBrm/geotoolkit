@@ -72,9 +72,6 @@ export class LayerselectionComponent implements OnInit {
     },error => {
       this.status = `An error occurred - ${error.message}`;
     });
-
-    event.value = "";
-
   }
 
   loadExternalSource(event: any){
