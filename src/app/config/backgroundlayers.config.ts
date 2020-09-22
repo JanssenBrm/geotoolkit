@@ -15,7 +15,7 @@ export const BACKGROUND_LAYERS = [
       'name': 'Mapbox Streets',
       'layer': new Tile({
         source: new XYZ({
-          url: `https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}@2x.png?access_token=${mapbox_access_token}`,
+          url: `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}?access_token=${mapbox_access_token}`,
         }),
         visible: false
       })
@@ -24,7 +24,7 @@ export const BACKGROUND_LAYERS = [
       'name': 'Mapbox Light',
       'layer': new Tile({
         source: new XYZ({
-          url: `https://api.mapbox.com/v4/mapbox.light/{z}/{x}/{y}@2x.png?access_token=${mapbox_access_token}`,
+          url: `https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}?access_token=${mapbox_access_token}`,
         }),
         visible:false
       })
@@ -33,7 +33,7 @@ export const BACKGROUND_LAYERS = [
       'name': 'Mapbox Dark',
       'layer': new Tile({
         source: new XYZ({
-          url: `https://api.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}@2x.png?access_token=${mapbox_access_token}`,
+          url: `https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/256/{z}/{x}/{y}?access_token=${mapbox_access_token}`,
         }),
         visible:false
       })
@@ -42,7 +42,7 @@ export const BACKGROUND_LAYERS = [
       'name': 'Mapbox Satellite',
       'layer': new Tile({
         source: new XYZ({
-          url: `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.png?access_token=${mapbox_access_token}`,
+          url: `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=${mapbox_access_token}`,
         }),
         visible:false
       })
@@ -51,7 +51,7 @@ export const BACKGROUND_LAYERS = [
       'name': 'Mapbox Streets Satellite',
       'layer': new Tile({
         source: new XYZ({
-          url: `https://api.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}@2x.png?access_token=${mapbox_access_token}`,
+          url: `https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/256/{z}/{x}/{y}?access_token=${mapbox_access_token}`,
         }),
         visible:false
       })
@@ -60,7 +60,7 @@ export const BACKGROUND_LAYERS = [
     'name': 'Mapbox Outdoors',
     'layer': new Tile({
       source: new XYZ({
-        url: `https://api.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}@2x.png?access_token=${mapbox_access_token}`,
+        url: `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/256/{z}/{x}/{y}?access_token=${mapbox_access_token}`,
       }),
       visible:false
     })
