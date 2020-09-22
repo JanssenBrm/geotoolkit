@@ -77,7 +77,6 @@ export class LegendComponent implements OnInit, OnChanges {
 
   toggleGridLayer(layer: any, visible: boolean = null){
     layer.gridVisible = !layer.gridVisible;
-    console.log("LAYER GRID", layer.gridVisible);
     this.ngRedux.dispatch({
         type: LayerActions.TOGGLE_GRID_LAYER,
         body: {

@@ -15,7 +15,6 @@ export class MapboxService {
   constructor(private http:HttpClient) { }
 
   reverseGeocode(lat: any, lon: any){
-    console.log("REVERSE GEOCODE")
     return this.http.get(`${this.baseUrl}/geocoding/v5/mapbox.places/${lat},${lon}.json?access_token=${this.accessToken}`).pipe(
       map(response => {
          return response;

@@ -104,7 +104,6 @@ export class LayerselectionComponent implements OnInit {
         });
 
         styleSelectionRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed', result);
 
             if (!isNullOrUndefined(result)) {
                 const params = layer.layer.getSource().getParams();

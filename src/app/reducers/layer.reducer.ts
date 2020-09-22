@@ -31,7 +31,6 @@ export function layerReducer(state = l_init_state, action) {
   switch(action.type){
     case LayerActions.SET_BACKGROUND_LAYERS:
 
-      console.log("LAYER REDUCER", "Setting background layers", action);
 
       state = Object.assign({}, state, {
         backgroundLayers: action.body
@@ -40,7 +39,6 @@ export function layerReducer(state = l_init_state, action) {
 
     case LayerActions.SELECT_BACKGROUND_LAYER:
 
-      console.log("LAYER REDUCER", "Selecting background layers", action);
       const backgroundLayers = state.backgroundLayers.map(layer => {
           if(layer.layer.getVisible())
             layer.layer.setVisible(false);
@@ -56,7 +54,6 @@ export function layerReducer(state = l_init_state, action) {
       break;
     case LayerActions.ADD_LAYERS:
 
-      console.log("LAYER REDUCER", "Adding layers", action);
       const newLayers = state.layers.concat(action.body);
       state = Object.assign({}, state, {
         layers: newLayers,
@@ -66,8 +63,6 @@ export function layerReducer(state = l_init_state, action) {
       break;
 
     case LayerActions.SET_EXTENT:
-
-      console.log("LAYER REDUCER", "Setting extent", action);
       state = Object.assign({}, state, {
         extent: action.body.extent
       });
@@ -76,7 +71,6 @@ export function layerReducer(state = l_init_state, action) {
 
     case LayerActions.ADD_FEATURE:
 
-      console.log("LAYER REDUCER", "Adding feature", action);
       const feature = action.body;
       const currFeatures = state.features;
       const featureList = currFeatures.find(featureInfo => featureInfo.type === feature.type);
@@ -96,7 +90,6 @@ export function layerReducer(state = l_init_state, action) {
       break;
 
     case LayerActions.ADD_FEATURE_LIST:
-      console.log("LAYER REDUCER", "Adding feature list", action);
       const features = action.body;
 
       features.features.forEach(feature => {
@@ -107,8 +100,6 @@ export function layerReducer(state = l_init_state, action) {
 
 
     case LayerActions.SELECT_FEATURE:
-
-      console.log("LAYER REDUCER", "Selecting feature", action);
       const featList = state.features.find(featureInfo => featureInfo.type === action.body.type);
 
       if(featList){
@@ -123,8 +114,6 @@ export function layerReducer(state = l_init_state, action) {
 
       break;
     case LayerActions.REMOVE_FEATURE:
-
-      console.log("LAYER REDUCER", "Removing feature", action);
       const rmFeatList = state.features.find(featureInfo => featureInfo.type === action.body.type);
 
       if(rmFeatList){
@@ -137,8 +126,6 @@ export function layerReducer(state = l_init_state, action) {
       break;
     case LayerActions.SET_ACTIVE_FEATURE:
 
-      console.log("LAYER REDUCER", "Setting active feature", action);
-
       state = Object.assign({}, state, {
         activeFeature: action.body.feature,
       });
@@ -146,8 +133,6 @@ export function layerReducer(state = l_init_state, action) {
       break;
 
     case LayerActions.SET_PROJECTION_SYSTEM:
-
-      console.log("LAYER REDUCER", "Setting projection system", action);
       const newCrs = action.body.crs;
       state = Object.assign({}, state, {
         crs: newCrs
@@ -156,9 +141,6 @@ export function layerReducer(state = l_init_state, action) {
       break;
 
     case LayerActions.SELECT_DATE:
-
-      console.log("LAYER REDUCER", "Load date", action);
-
 
       state.layers.forEach(info => {
         info.layers.forEach( layer => {
@@ -188,7 +170,6 @@ export function layerReducer(state = l_init_state, action) {
 
     case LayerActions.TOGGLE_LAYER:
 
-      console.log("LAYER REDUCER", "Toggle layer", action);
 
       const layer = action.body.layer;
 
@@ -217,8 +198,6 @@ export function layerReducer(state = l_init_state, action) {
       break;
   case LayerActions.TOGGLE_GRID_LAYER:
 
-      console.log("LAYER REDUCER", "Toggle grid layer", action);
-
       const layerName = action.body.layer.name;
 
       state.layers.forEach(list =>  {
@@ -244,7 +223,6 @@ function loadTimes(layers: any[]){
   layers.forEach(info => {
     info.layers.forEach(layer =>{
       if(layer.layer.getVisible() && layer.showInList){
-        console.log(layer.name, "IS VISIBLE");
         times.push(layer.times);
       }
     })

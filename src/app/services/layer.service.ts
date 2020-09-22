@@ -47,8 +47,6 @@ export class LayerService {
         let result = parser.read(response);
         let layers = [];
 
-        console.log(result);
-
         if (type === 'WMS') {
           layers  = this.readWMSCapabilities(result, url);
         } else if (type === 'WMTS') {
@@ -63,11 +61,7 @@ export class LayerService {
   readWMTSCapabilities(capabilities: any, url: any){
     const layerList = [];
 
-    console.log('RESULT', capabilities);
-
     capabilities.Contents.Layer.forEach(layer => {
-
-      console.log(layer);
       try {
         const timeDim = layer.Dimension ? layer.Dimension.find(dimension =>  dimension.Identifier ? dimension.Identifier.toUpperCase() === 'TIME' : Date.parse(dimension.Default)) : null;
         let times = [];

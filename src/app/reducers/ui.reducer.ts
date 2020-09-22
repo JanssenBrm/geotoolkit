@@ -23,32 +23,23 @@ export function uiReducer(state = u_init_state, action) {
 
   switch(action.type){
     case ToolBoxActions.SELECT_ACTION:
-      console.log("UI REDUCER", "Selecting action", action);
-
       state = Object.assign({}, state, {
         activeAction: action.body.action
       });
       break;
     case ToolBoxActions.STOP_ACTION:
-      console.log("UI REDUCER", "Stopping current action", action);
-
       state = Object.assign({}, state, {
         activeSelection: null
       });
       break;
 
     case ToolBoxActions.SET_SELECTION_TYPE:
-      console.log("UI REDUCER", "Selecting selection type", action);
-
       state = Object.assign({}, state, {
         activeSelection: action.body.selection
       });
       break;
 
     case UIActions.SET_CALENDAR_DATES:
-
-      console.log("UI REDUCER", "Setting calendar dates", action);
-
       let calendarDates = [];
 
       action.body.times.forEach(timeSeries =>{
@@ -76,9 +67,6 @@ export function uiReducer(state = u_init_state, action) {
       break;
 
     case UIActions.SET_PROGRESS:
-
-      console.log("UI REDUCER", "Set progress", action);
-
       let loadedTiles = state.loadedTiles;
       let loadingTiles = state.loadingTiles;
       let errorTiles = state.errorTiles;
@@ -102,8 +90,6 @@ export function uiReducer(state = u_init_state, action) {
       break;
 
     case UIActions.RESET_PROGRESS:
-
-      console.log("UI REDUCER", "Reset progress", action);
 
       state = Object.assign({}, state, {
         loadedTiles: 0,

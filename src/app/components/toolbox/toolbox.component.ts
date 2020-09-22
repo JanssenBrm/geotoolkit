@@ -21,7 +21,6 @@ export class ActionsComponent implements OnInit {
 
     this.ui.subscribe(state =>{
       this.activeAction = state.activeAction;
-      console.log(this.activeAction);
     })
   }
 
