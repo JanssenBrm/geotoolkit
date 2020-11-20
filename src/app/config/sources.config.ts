@@ -61,5 +61,13 @@ export const SOURCES = [
         'url': 'http://maps.vgt.vito.be/geowebcache/service/wmts?REQUEST=getcapabilities',
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
+    },
+    {
+        'name': 'LOCALHOST',
+        'description': 'VITO TAP Maps Cluster',
+        'url': '/proxy/wmts-local/service/wmts?REQUEST=getcapabilities&amp;VERSION=1.0.0',
+        'infoUrl': '',
+        'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png',
+        'contrastLayers': ['CGS_S2_RADIOMETRY']
     }
 ];

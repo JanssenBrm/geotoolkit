@@ -41,5 +41,19 @@
     </div>
   </div>
   <h3>Available layers</h3>
-  <div *ngFor="let layer of info.layers  | layerSort | layerFilter:searchFilter " class="layerInfo" (click)="toggleLayer(layer)"><div class="toggle"><input type="checkbox" [checked]="layer.layer.getVisible()"></div><span class="info"><span class="title">{{layer.name}}</span><br/><span class="description">{{layer.description}}</span></span></div>
+  <div *ngFor="let layer of info.layers  | layerSort | layerFilter:searchFilter " class="layerInfo">
+    <div class="title" (click)="toggleLayer(layer)">
+      <input type="checkbox" [checked]="layer.layer.getVisible()">
+      <span class="info"><span>{{layer.name}}</span><br/><span>{{layer.description}}</span></span>
+    </div>
+    <div class="tools">
+      <div *ngIf="info.contrastLayers && info.contrastLayers.includes(layer.name)">
+        <input type="checkbox" [checked]="contrastEnabled.includes(layer.name)" (change)="toggleContrast(layer)">
+        <div *ngIf="contrastEnabled.includes(layer.name)">
+          <input type="range" [value]="layer.contrast.alpha || .5" (change)="setContrastValue(layer, 'alpha', $event.target.value)" [min]="contrastBounds.alpha[0]" [max]="contrastBounds.alpha[1]" [step]="0.01"/>{{getValueFromContrast('alpha', layer)}}
+          <input type="range"  [value]="layer.contrast.beta || 5" (change)="setContrastValue(layer, 'beta', $event.target.value)" [min]="contrastBounds.beta[0]" [max]="contrastBounds.beta[1]" [step]="1"/>{{getValueFromContrast('beta', layer)}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

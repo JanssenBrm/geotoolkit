@@ -55,9 +55,14 @@ h3{
 
 .layerInfo{
   display:flex;
-  flex-direction:row;
+  flex-direction:column;
   padding:0.5rem;
   border-radius: $alert-radius;
+
+  .title {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .layerInfo:hover{

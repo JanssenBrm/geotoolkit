@@ -10,7 +10,7 @@ import {NgRedux} from '@angular-redux/store/lib/src/components/ng-redux';
 import {IAppState} from '../reducers/root.reducer';
 import {UIActions} from '../actions/ui.action';
 
-
+import {ImageTile} from 'ol';
 import {WMSCapabilities, WMTSCapabilities} from 'ol/format';
 import {WMTS, TileDebug, TileWMS} from 'ol/source';
 import {optionsFromCapabilities} from 'ol/source/WMTS';
@@ -29,7 +29,7 @@ export class LayerService {
     return BACKGROUND_LAYERS;
   }
 
-  loadExternalLayers(url: any) {
+  loadExternalLayers(url: any, customloadLayers: string[]) {
 
     let parser = null;
     let type = '';
@@ -44,7 +44,7 @@ export class LayerService {
     return this.http.get(url, { responseType: 'text' }).pipe(
       map( response => {
 
-        let result = parser.read(response);
+        const result = parser.read(response);
         let layers = [];
 
         if (type === 'WMS') {
@@ -53,12 +53,33 @@ export class LayerService {
           layers  = this.readWMTSCapabilities(result, url);
         }
 
+        layers.forEach((l: any) => {
+            if (customloadLayers.includes(l.name)) {
+              const source = l.layer.getSource();
+              if (source instanceof WMTS) {
+                  source.setTileLoadFunction((tile, src) => this.loadTile(tile, src, l));
+              }
+            }
+            l.contrast = {};
+        });
+
 
         return layers;
       }));
   }
 
-  readWMTSCapabilities(capabilities: any, url: any){
+  loadTile(tile: ImageTile, src: string, layer: any) {
+    console.log("LOADIGN TILE", layer);
+    let url = src;
+    if (layer.contrast) {
+      Object.keys(layer.contrast).forEach((key: string) => {
+        url += `&${key}=${layer.contrast[key]}`;
+      });
+    }
+    tile.getImage().src = url;
+  }
+
+  readWMTSCapabilities(capabilities: any, url: any) {
     const layerList = [];
 
     capabilities.Contents.Layer.forEach(layer => {
@@ -251,5 +272,5 @@ export class LayerService {
 
     });
 
-  };
+  }
 }

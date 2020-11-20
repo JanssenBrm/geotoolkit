@@ -1,13 +1,13 @@
 import {Component, HostListener, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {select} from "@angular-redux/store";
-import {IAppState} from "../../reducers/root.reducer";
-import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
-import {LayerState} from "../../reducers/layer.reducer";
-import {LayerActions} from "../../actions/layers.action";
-import {MapboxService} from "../../services/mapbox.service";
-import {UIActions} from "../../actions/ui.action";
-import {ToolBoxActions} from "../../actions/toolbox.action";
-import {UtilService} from "../../services/util.service";
+import {select} from '@angular-redux/store';
+import {IAppState} from '../../reducers/root.reducer';
+import {NgRedux} from '@angular-redux/store/lib/src/components/ng-redux';
+import {LayerState} from '../../reducers/layer.reducer';
+import {LayerActions} from '../../actions/layers.action';
+import {MapboxService} from '../../services/mapbox.service';
+import {UIActions} from '../../actions/ui.action';
+import {ToolBoxActions} from '../../actions/toolbox.action';
+import {UtilService} from '../../services/util.service';
 
 import { transformExtent, transform } from 'ol/proj';
 import { getCenter } from 'ol/extent';
@@ -15,7 +15,7 @@ import { Vector } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import { Map, View, Overlay } from 'ol';
 import { defaults, ZoomToExtent, ScaleLine} from 'ol/control';
-import { Draw } from 'ol/interaction'; 
+import { Draw } from 'ol/interaction';
 import { Polygon, LineString, Circle } from 'ol/geom';
 import { createBox } from 'ol/interaction/Draw';
 
@@ -70,8 +70,8 @@ export class MapComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    let newLayers = [];
-    if(changes.layers && !changes.layers.isFirstChange()){
+    const newLayers = [];
+    if (changes.layers && !changes.layers.isFirstChange()) {
        changes.layers.currentValue.forEach( layerInfo => {
            const hit = changes.layers.previousValue.find(prevLayerInfo => prevLayerInfo.url === layerInfo.url);
 
@@ -83,33 +83,33 @@ export class MapComponent implements OnInit, OnChanges {
        this.addLayers(newLayers);
     }
 
-    if(changes.interaction && !changes.interaction.isFirstChange()){
+    if (changes.interaction && !changes.interaction.isFirstChange()) {
       this.removeInteraction(changes.interaction.previousValue);
       this.addInteraction(changes.interaction.currentValue);
-      if(this.interaction == ''){
+      if (this.interaction === '') {
         this.stopDrawing();
       }
     }
 
-    if(changes.viewExtent && !changes.viewExtent.isFirstChange()){
+    if (changes.viewExtent && !changes.viewExtent.isFirstChange()) {
       this.zoomToExtent(this.viewExtent);
     }
 
-    if(changes.features && !changes.features.isFirstChange()){
+    if (changes.features && !changes.features.isFirstChange()) {
       this.vectorLayer.getSource().clear();
       this.vectorLayer.getSource().addFeatures(this.features);
     }
 
-    if(changes.activeFeature && !changes.activeFeature.isFirstChange() && changes.activeFeature.previousValue !== changes.activeFeature.currentValue){
+    if (changes.activeFeature && !changes.activeFeature.isFirstChange() && changes.activeFeature.previousValue !== changes.activeFeature.currentValue) {
       this.zoomToExtent(this.activeFeature.getGeometry().getExtent());
     }
 
   }
 
 
-  initMap(){
-    let extent = transformExtent(this.extent, /* WGS84 */ 'EPSG:4326', /* MERCATOR */ 'EPSG:3857');
-    let center = getCenter(extent);
+  initMap() {
+    const extent = transformExtent(this.extent, /* WGS84 */ 'EPSG:4326', /* MERCATOR */ 'EPSG:3857');
+    const center = getCenter(extent);
 
     this.vectorLayer = new Vector({
       source: new VectorSource({features: this.features, wrapX: false}),
@@ -137,27 +137,27 @@ export class MapComponent implements OnInit, OnChanges {
       target: 'map'
     });
 
-    const redux = this.ngRedux
+    const redux = this.ngRedux;
     this.map.on('movestart', function(event) {
       redux.dispatch({
         type: UIActions.RESET_PROGRESS,
-        body:{
+        body: {
         }
-      })
+      });
     });
 
     this.setBackgroundLayers();
     this.initInteractions();
   }
-  setBackgroundLayers(){
+  setBackgroundLayers() {
 
-    this.backgroundLayers.forEach(layer =>{
+    this.backgroundLayers.forEach(layer => {
         this.map.addLayer(layer.layer);
-    })
+    });
 
   }
 
-  initInteractions(){
+  initInteractions() {
 
     this.interactions = [];
     this.interactions.push({
@@ -197,7 +197,7 @@ export class MapComponent implements OnInit, OnChanges {
 
 
 
-    this.interactions.forEach(interaction =>{
+    this.interactions.forEach(interaction => {
       interaction.interaction.on('drawend', feature => {
         this.drawEnd(feature.feature);
       });
@@ -205,13 +205,12 @@ export class MapComponent implements OnInit, OnChanges {
 
         const feature = event.feature;
 
-        if(!this.measureTooltipElement)
-        {
+        if (!this.measureTooltipElement) {
           this.createMeasureTooltip();
         }
 
         listener = feature.getGeometry().on('change', (evt) => {
-          let geom = evt.target;
+          const geom = evt.target;
           let output;
           let tooltipCoord;
           if (geom instanceof Polygon) {
@@ -247,13 +246,13 @@ export class MapComponent implements OnInit, OnChanges {
     this.map.addOverlay(this.measureTooltip);
   }
 
-  drawEnd(feature: any){
+  drawEnd(feature: any) {
 
-    if(this.interaction == 'point'){
+    if (this.interaction == 'point') {
       let coordinates = feature.getGeometry().getCoordinates();
       coordinates = transform(coordinates, 'EPSG:3857', 'EPSG:4326');
-      this.mapboxService.reverseGeocode(coordinates[0], coordinates[1]).subscribe(data =>{
-         let address = {};
+      this.mapboxService.reverseGeocode(coordinates[0], coordinates[1]).subscribe(data => {
+         const address = {};
 
         data['features'].forEach(feature => {
           address[this.capitalizeFirstLetter(feature.place_type[0])] = feature.place_name;
@@ -261,16 +260,16 @@ export class MapComponent implements OnInit, OnChanges {
 
         feature.setProperties({'Address': address});
 
-      })
+      });
     }
 
     this.ngRedux.dispatch({
       type: LayerActions.ADD_FEATURE,
-      body:{
+      body: {
         feature: feature,
         type: this.interaction
       }
-    })
+    });
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -281,51 +280,54 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
 
-  stopDrawing(){
+  stopDrawing() {
 
     this.map.removeOverlay(this.measureTooltip);
     this.measureTooltipElement = null;
 
     this.ngRedux.dispatch({
       type: ToolBoxActions.STOP_ACTION,
-      body:{
+      body: {
       }
-    })
+    });
   }
 
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  removeInteraction(type: string){
+  removeInteraction(type: string) {
 
-    if(type !== null && type !== ''){
+    if (type !== null && type !== '') {
       const interaction = this.interactions.find(interaction => interaction.type === type);
-      if(interaction)
+      if (interaction) {
         this.map.removeInteraction(interaction.interaction);
+      }
     }
   }
 
-  addInteraction(type: string){
+  addInteraction(type: string) {
 
-    if(type !== null && type !== '') {
+    if (type !== null && type !== '') {
       const interaction = this.interactions.find(interaction => interaction.type === type);
-      if(interaction)
+      if (interaction) {
         this.map.addInteraction(interaction.interaction);
+      }
     }
   }
-  zoomToExtent(extent: number[]){
-    if(extent != null)
+  zoomToExtent(extent: number[]) {
+    if (extent != null) {
       this.map.getView().fit(extent, {size: this.map.getSize(), maxZoom: 16});
+    }
   }
 
 
 
-  addLayers(layers: any[]){
+  addLayers(layers: any[]) {
     layers.forEach(layerInfo => {
       layerInfo.layers.forEach(layer => {
         this.map.addLayer(layer.layer);
-      })
+      });
     });
   }
 
