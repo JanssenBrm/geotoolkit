@@ -18,7 +18,38 @@ export const SOURCES = [
         'description': 'VITO WMTS based on GeoTrellis',
         'url': 'http://wmts01-dev.services.rscloud.vito.be:8080/service/wmts?REQUEST=getcapabilities',
         'infoUrl': '',
-        'imageUrl': 'https://pbs.twimg.com/profile_images/935755572972007424/ggPzGIgG.jpg'
+        'imageUrl': 'https://pbs.twimg.com/profile_images/935755572972007424/ggPzGIgG.jpg',
+        'contrastLayers': [{
+            layer: 'CGS_S2_RADIOMETRY',
+            type: 'sigmoid',
+            params: {
+                alpha: {
+                    bounds:  [0.5, 0.6],
+                    step: 0.01,
+                    value: 0.5,
+                },
+                beta: {
+                    bounds:  [1, 30],
+                    step: 1,
+                    value: 5
+                }
+            }
+        }, {
+            layer: 'CGS_S2_NIR',
+            type: 'sigmoid',
+            params: {
+                alpha: {
+                    bounds:  [0.5, 0.6],
+                    step: 0.01,
+                    value: 0.5,
+                },
+                beta: {
+                    bounds:  [1, 30],
+                    step: 1,
+                    value: 5
+                }
+            }
+        }]
     },
     {
         'name': 'PROBA-V MEP (WMTS)',
@@ -62,12 +93,12 @@ export const SOURCES = [
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
     },
-    {
+    /*{
         'name': 'LOCALHOST',
         'description': 'VITO TAP Maps Cluster',
         'url': '/proxy/wmts-local/service/wmts?REQUEST=getcapabilities&amp;VERSION=1.0.0',
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png',
         'contrastLayers': ['CGS_S2_RADIOMETRY']
-    }
+    }*/
 ];

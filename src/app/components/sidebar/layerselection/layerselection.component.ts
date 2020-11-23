@@ -26,11 +26,6 @@ export class LayerselectionComponent implements OnInit {
 
     contrastEnabled: string[] = [];
 
-    contrastBounds = {
-        alpha: [0.5, 0.6],
-        beta: [0.5, 30]
-    };
-
     constructor(private ngRedux: NgRedux<IAppState>, private layerService: LayerService, public dialog: MatDialog) {
     }
 
@@ -62,10 +57,10 @@ export class LayerselectionComponent implements OnInit {
     addSource(event: any) {
         this.status = 'Loading source';
         const source = this.sources.find(source => source.name === event);
+        const contrastLayers: string[] = source.contrastLayers.map((l) => l.layer);
 
-        this.layerService.loadExternalLayers(source.url, source.contrastLayers).subscribe(layers => {
+        this.layerService.loadExternalLayers(source.url, contrastLayers).subscribe(layers => {
             this.status = '';
-            console.log(layers);
             this.ngRedux.dispatch({
                 type: LayerActions.ADD_LAYERS,
                 body: {
@@ -75,7 +70,12 @@ export class LayerselectionComponent implements OnInit {
                     infoUrl: source.infoUrl,
                     imageUrl: source.imageUrl,
                     contrastLayers: source.contrastLayers || [],
-                    layers: layers
+                    layers: layers.map((l: any) => {
+                        if (contrastLayers.includes(l.name)) {
+                            l.contrast = source.contrastLayers.find((cl) => cl.layer === l.name);
+                        }
+                        return l;
+                    })
                 }
             });
         }, error => {
@@ -141,27 +141,20 @@ export class LayerselectionComponent implements OnInit {
     toggleContrast(layer: any): void {
         if (this.contrastEnabled.includes(layer.name)) {
             this.contrastEnabled = this.contrastEnabled.filter((l: string) => l !== layer.name);
+            layer.contrast.enabled = false;
         } else {
             this.contrastEnabled = [...this.contrastEnabled, layer.name];
-            layer.contrast = {
-                alpha: .5,
-                beta: 5
-            };
+            layer.contrast.enabled = true;
         }
+        this.reloadLayer(layer);
     }
 
     setContrastValue(layer: any, key: string, value: number) {
-        layer.contrast[key] = value;
+        layer.contrast.params[key].value = value;
         this.reloadLayer(layer);
     }
-    getValueFromContrast(key: string, layer: any){
-        const bounds = this.contrastBounds[key];
-        if (layer.contrast && layer.contrast[key]) {
-            const percentage = (layer.contrast[key] - bounds[0]) / (bounds[1] - bounds[0]);
-            return percentage - .5 / .5;
-        } else {
-            return 0;
-        }
+    getValueFromContrast(key: string, layer: any) {
+        return layer.contrast.params[key].value;
     }
     reloadLayer(layer: any) {
         layer.layer.getSource().refresh();

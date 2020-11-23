@@ -124,3 +124,38 @@ input[type=text]{
   border-radius: $alert-radius;
 }
 
+
+.tools {
+  display: flex;
+  flex-direction: column;
+
+  .tool {
+    margin: .25rem 0;
+    margin-left: .5rem;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+
+    div {
+      display: flex;
+      margin: .25rem 0;
+      input {
+        margin-right: .25rem;
+      }
+    }
+    .params {
+      display: flex;
+      flex-direction: row;
+      margin-left: 1rem;
+      padding: .25rem;
+
+      span {
+        flex: 1;
+      }
+      input {
+        flex: 6;
+      }
+    }
+
+  }
+}

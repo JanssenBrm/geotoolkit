@@ -60,7 +60,6 @@ export class LayerService {
                   source.setTileLoadFunction((tile, src) => this.loadTile(tile, src, l));
               }
             }
-            l.contrast = {};
         });
 
 
@@ -69,11 +68,10 @@ export class LayerService {
   }
 
   loadTile(tile: ImageTile, src: string, layer: any) {
-    console.log("LOADIGN TILE", layer);
     let url = src;
-    if (layer.contrast) {
-      Object.keys(layer.contrast).forEach((key: string) => {
-        url += `&${key}=${layer.contrast[key]}`;
+    if (layer.contrast && layer.contrast.enabled) {
+      Object.keys(layer.contrast.params).forEach((key: string) => {
+        url += `&${key}=${layer.contrast.params[key].value}`;
       });
     }
     tile.getImage().src = url;
