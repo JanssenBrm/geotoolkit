@@ -16,7 +16,7 @@ export const SOURCES = [
     {
         'name': 'GeoTrellis (WMTS - Dev)',
         'description': 'VITO WMTS based on GeoTrellis',
-        'url': 'http://wmts01-dev.services.rscloud.vito.be:8080/service/wmts?REQUEST=getcapabilities',
+        'url': '/proxy/vito-wmts/service/wmts?REQUEST=getcapabilities',
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/935755572972007424/ggPzGIgG.jpg',
         'contrastLayers': [{
