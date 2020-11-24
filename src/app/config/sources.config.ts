@@ -24,13 +24,9 @@ export const SOURCES = [
             type: 'sigmoid',
             params: {
                 alpha: {
-                    bounds:  [0.5, 0.6],
-                    step: 0.01,
-                    value: 0.5,
+                    value: 0.50,
                 },
                 beta: {
-                    bounds:  [1, 30],
-                    step: 1,
                     value: 5
                 }
             }
@@ -39,13 +35,9 @@ export const SOURCES = [
             type: 'sigmoid',
             params: {
                 alpha: {
-                    bounds:  [0.5, 0.6],
-                    step: 0.01,
                     value: 0.5,
                 },
                 beta: {
-                    bounds:  [1, 30],
-                    step: 1,
                     value: 5
                 }
             }
@@ -99,6 +91,5 @@ export const SOURCES = [
         'url': '/proxy/wmts-local/service/wmts?REQUEST=getcapabilities&amp;VERSION=1.0.0',
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png',
-        'contrastLayers': ['CGS_S2_RADIOMETRY']
     }*/
 ];

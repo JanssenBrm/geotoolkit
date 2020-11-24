@@ -150,10 +150,17 @@ input[type=text]{
       padding: .25rem;
 
       span {
-        flex: 1;
+        width: auto;
+        &:first-child {
+          width: 6rem;
+        }
+        &:last-child {
+          width: 2rem;
+          text-align: left;
+        }
       }
       input {
-        flex: 6;
+        flex: 1;
       }
     }
 
