@@ -57,9 +57,9 @@ export class LayerselectionComponent implements OnInit {
     addSource(event: any) {
         this.status = 'Loading source';
         const source = this.sources.find(source => source.name === event);
-        const contrastLayers: string[] = source.contrastLayers.map((l) => l.layer);
+        const contrastLayers: string[] = source.contrastLayers ? source.contrastLayers.map((l) => l.layer) : [];
 
-        this.layerService.loadExternalLayers(source.url, contrastLayers).subscribe(layers => {
+        this.layerService.loadExternalLayers(source.url, contrastLayers, source.headers).subscribe(layers => {
             this.status = '';
             this.ngRedux.dispatch({
                 type: LayerActions.ADD_LAYERS,
@@ -86,7 +86,7 @@ export class LayerselectionComponent implements OnInit {
     loadExternalSource(event: any) {
         this.status = 'Loading external source';
         const url = event.value;
-        this.layerService.loadExternalLayers(url, []).subscribe(layers => {
+        this.layerService.loadExternalLayers(url).subscribe(layers => {
                 this.status = '';
                 this.ngRedux.dispatch({
                     type: LayerActions.ADD_LAYERS,

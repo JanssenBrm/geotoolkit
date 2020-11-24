@@ -19,6 +19,9 @@ export const SOURCES = [
         'url': '/proxy/vito-wmts/service/wmts?REQUEST=getcapabilities',
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/935755572972007424/ggPzGIgG.jpg',
+        'headers': {
+            'base_url': '/proxy/vito-wmts/service/wmts'
+        },
         'contrastLayers': [{
             layer: 'CGS_S2_RADIOMETRY',
             type: 'sigmoid',

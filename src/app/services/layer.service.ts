@@ -29,7 +29,7 @@ export class LayerService {
     return BACKGROUND_LAYERS;
   }
 
-  loadExternalLayers(url: any, customloadLayers: string[]) {
+  loadExternalLayers(url: any, customloadLayers: string[] = [], headers:any = {}) {
 
     let parser = null;
     let type = '';
@@ -41,7 +41,8 @@ export class LayerService {
       parser = new WMTSCapabilities();
       type = 'WMTS';
     }
-    return this.http.get(url, { responseType: 'text' }).pipe(
+
+    return this.http.get(url, { responseType: 'text' , headers: headers}).pipe(
       map( response => {
 
         const result = parser.read(response);
