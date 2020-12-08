@@ -13,3 +13,7 @@
 <div class="progress-bar" *ngIf="(ui | async).loadingTiles !== (ui | async).loadedTiles">
   <app-progressbar [loadingCount]="(ui | async).loadingTiles" [loadedCount]="(ui | async).loadedTiles"></app-progressbar>
 </div>
+
+<div class="chartcontainer" *ngIf="!!(ui | async).showContrast">
+  <app-sigmoidcontrast (confirm)="setContrast($event?.alpha, $event?.beta)"  (disable)="disableContrast()" [layer]="(ui | async).showContrast" [extent]="(layers | async ).extent"></app-sigmoidcontrast>
+</div>

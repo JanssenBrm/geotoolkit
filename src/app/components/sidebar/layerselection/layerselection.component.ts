@@ -24,8 +24,6 @@ export class LayerselectionComponent implements OnInit {
     status: string;
     searchFilter: string;
 
-    contrastEnabled: string[] = [];
-
     constructor(private ngRedux: NgRedux<IAppState>, private layerService: LayerService, public dialog: MatDialog) {
     }
 
@@ -139,25 +137,12 @@ export class LayerselectionComponent implements OnInit {
     }
 
     toggleContrast(layer: any): void {
-        if (this.contrastEnabled.includes(layer.name)) {
-            this.contrastEnabled = this.contrastEnabled.filter((l: string) => l !== layer.name);
-            layer.contrast.enabled = false;
-        } else {
-            this.contrastEnabled = [...this.contrastEnabled, layer.name];
-            layer.contrast.enabled = true;
-        }
-        this.reloadLayer(layer);
-    }
-
-    setContrastValue(layer: any, key: string, value: number) {
-        layer.contrast.params[key].value = value;
-        this.reloadLayer(layer);
-    }
-    getValueFromContrast(key: string, layer: any) {
-        return layer.contrast.params[key].value;
-    }
-    reloadLayer(layer: any) {
-        layer.layer.getSource().refresh();
+        this.ngRedux.dispatch({
+            type: UIActions.SHOW_CONTRAST_DIALOG,
+            body: {
+                layer
+            }
+        });
     }
 
 

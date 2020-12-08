@@ -1,0 +1,48 @@
+<h1>Contrast</h1>
+<div class="sliders">
+    <div class="param">
+        <div class="label">
+            Location pivot point:
+        </div>
+        <div class="slider">
+            <input type="range" [min]="0" [max]="1" [step]="0.01" [value]="alpha" (change)="updateAlpha($event.target.value)"/>
+            <span class="label">{{alpha}}</span>
+        </div>
+    </div>
+    <div class="param">
+        <div class="label">
+            Curvature:
+        </div>
+        <div class="slider">
+            <input type="range" [min]="1" [max]="10" [step]="0.1" [value]="beta" (change)="updateBeta($event.target.value)"/>
+            <span class="label">{{beta}}</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div id="chart">
+    </div>
+    <div class="images">
+        <div class="image">
+            <h4>Current</h4>
+            <img [src]="url" (load)="originalLoaded = true"/>
+            <div class="loading" *ngIf="!originalLoaded">
+                <span class="fa fa-spin fa-spinner fa-2x"></span>
+                <span>Loading original image</span>
+            </div>
+        </div>
+        <div class="image">
+            <h4>Result</h4>
+            <img [src]="contrast_url"  (load)="contrastLoaded = true"/>
+            <div class="loading" *ngIf="!contrastLoaded">
+                <span class="fa fa-spin fa-spinner fa-2x"></span>
+                <span>Loading contrast image</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="buttons">
+    <button class="button alert" (click)="disable.emit()">Disable</button>
+    <button class="button" (click)="close(true)">Cancel</button>
+    <button class="button primary" (click)="close(false)">Apply</button>
+</div>

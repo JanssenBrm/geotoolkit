@@ -38,6 +38,7 @@ import {FormsModule} from '@angular/forms';
 import { SearchComponent } from './components/sidebar/search/search.component';
 import {UtilService} from './services/util.service';
 import { StyleselectionComponent } from './components/sidebar/styleselection/styleselection.component';
+import { SigmoidContrastComponent } from './components/sigmoidcontrast/sigmoid-contrast.component';
 
 
 const routes: Routes = [
@@ -70,7 +71,8 @@ const routes: Routes = [
     ProgressbarComponent,
     LayerFilterPipe,
     SearchComponent,
-    StyleselectionComponent
+    StyleselectionComponent,
+    SigmoidContrastComponent
   ],
   imports: [
     BrowserModule,

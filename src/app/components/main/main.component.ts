@@ -6,6 +6,7 @@ import {LayerService} from "../../services/layer.service";
 import {NgRedux} from "@angular-redux/store/lib/src/components/ng-redux";
 import {IAppState} from "../../reducers/root.reducer";
 import {animate, keyframes, query, stagger, state, style, transition, trigger} from "@angular/animations";
+import {UIActions} from '../../actions/ui.action';
 
 @Component({
   selector: 'app-main',
@@ -31,6 +32,8 @@ export class MainComponent implements OnInit {
 
   features: any[] = [];
 
+  contrastLayer: any = undefined;
+
   constructor( private ngRedux: NgRedux<IAppState>, private layerService: LayerService) { }
 
   ngOnInit() {
@@ -40,12 +43,44 @@ export class MainComponent implements OnInit {
     this.layers.subscribe(state => {
       this.features = [];
       state.features.forEach(feature => {this.features = this.features.concat(feature.features)});
-    })
+    });
+
+    this.ui.subscribe(uiState => {
+      this.contrastLayer = uiState.showContrast;
+    });
 
     this.ngRedux.dispatch({
       type: LayerActions.SET_BACKGROUND_LAYERS, body: layers,
     });
 
+  }
+
+  setContrast(alpha: number, beta: number) {
+    if (alpha !== null && beta !== null) {
+      this.contrastLayer.contrast.enabled = true;
+      this.contrastLayer.contrast.params.alpha = alpha;
+      this.contrastLayer.contrast.params.beta = beta;
+      this.contrastLayer.layer.getSource().refresh();
+    }
+    this.ngRedux.dispatch({
+      type: UIActions.SHOW_CONTRAST_DIALOG,
+      body: {
+        layer: undefined
+      }
+    });
+  }
+
+  disableContrast() {
+    this.contrastLayer.contrast.enabled = false;
+    this.contrastLayer.contrast.params.alpha = undefined;
+    this.contrastLayer.contrast.params.beta = undefined;
+    this.contrastLayer.layer.getSource().refresh();
+    this.ngRedux.dispatch({
+      type: UIActions.SHOW_CONTRAST_DIALOG,
+      body: {
+        layer: undefined
+      }
+    });
   }
 
 }

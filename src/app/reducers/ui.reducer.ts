@@ -2,12 +2,13 @@ import {ToolBoxActions} from "../actions/toolbox.action";
 import {UIActions} from "../actions/ui.action";
 
 export interface UIState {
-  activeAction: string,
-  activeSelection: string,
-  calendarDates: any[],
-  loadingTiles: number,
-  loadedTiles: number,
-  errorTiles: number
+  activeAction: string;
+  activeSelection: string;
+  calendarDates: any[];
+  loadingTiles: number;
+  loadedTiles: number;
+  errorTiles: number;
+  showContrast: any;
 }
 
 export const u_init_state: UIState = {
@@ -17,6 +18,7 @@ export const u_init_state: UIState = {
   loadingTiles: 0,
   loadedTiles: 0,
   errorTiles: 0,
+  showContrast: undefined
 };
 
 export function uiReducer(state = u_init_state, action) {
@@ -98,6 +100,12 @@ export function uiReducer(state = u_init_state, action) {
       });
 
 
+      break;
+    case UIActions.SHOW_CONTRAST_DIALOG:
+      state = {
+        ...state,
+        showContrast: action.body.layer
+      };
       break;
   }
   return state;

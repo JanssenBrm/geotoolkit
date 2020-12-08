@@ -92,6 +92,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
     if (changes.viewExtent && !changes.viewExtent.isFirstChange()) {
+      console.log("EXTENT", this.viewExtent);
       this.zoomToExtent(this.viewExtent);
     }
 
@@ -142,6 +143,15 @@ export class MapComponent implements OnInit, OnChanges {
       redux.dispatch({
         type: UIActions.RESET_PROGRESS,
         body: {
+        }
+      });
+    });
+
+    this.map.on('moveend', function(event) {
+      redux.dispatch({
+        type: LayerActions.SET_EXTENT,
+        body: {
+          extent:  this.getView().calculateExtent()
         }
       });
     });

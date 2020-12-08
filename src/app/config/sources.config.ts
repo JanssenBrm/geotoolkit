@@ -25,25 +25,11 @@ export const SOURCES = [
         'contrastLayers': [{
             layer: 'CGS_S2_RADIOMETRY',
             type: 'sigmoid',
-            params: {
-                alpha: {
-                    value: 0.50,
-                },
-                beta: {
-                    value: 5
-                }
-            }
+            params: {}
         }, {
             layer: 'CGS_S2_NIR',
             type: 'sigmoid',
-            params: {
-                alpha: {
-                    value: 0.5,
-                },
-                beta: {
-                    value: 5
-                }
-            }
+            params: {}
         }]
     },
     {
@@ -88,11 +74,34 @@ export const SOURCES = [
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png'
     },
-    /*{
+   /* {
         'name': 'LOCALHOST',
         'description': 'VITO TAP Maps Cluster',
         'url': '/proxy/wmts-local/service/wmts?REQUEST=getcapabilities&amp;VERSION=1.0.0',
         'infoUrl': '',
         'imageUrl': 'https://pbs.twimg.com/profile_images/641168186897858560/PI1QimyT_400x400.png',
+        'contrastLayers': [{
+            layer: 'CGS_S2_RADIOMETRY',
+            type: 'sigmoid',
+            params: {
+                alpha: {
+                    value: 0.50,
+                },
+                beta: {
+                    value: 5
+                }
+            }
+        }, {
+            layer: 'CGS_S2_NIR',
+            type: 'sigmoid',
+            params: {
+                alpha: {
+                    value: 0.5,
+                },
+                beta: {
+                    value: 5
+                }
+            }
+        }]
     }*/
 ];

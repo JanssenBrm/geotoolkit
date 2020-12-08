@@ -72,7 +72,7 @@ export class LayerService {
     let url = src;
     if (layer.contrast && layer.contrast.enabled) {
       Object.keys(layer.contrast.params).forEach((key: string) => {
-        url += `&${key}=${layer.contrast.params[key].value}`;
+        url += `&${key}=${layer.contrast.params[key]}`;
       });
     }
     tile.getImage().src = url;

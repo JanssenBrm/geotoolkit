@@ -139,9 +139,10 @@ input[type=text]{
     div {
       display: flex;
       margin: .25rem 0;
-      input {
-        margin-right: .25rem;
+      input, .fa {
+        margin-right: .5rem;
       }
+
     }
     .params {
       display: flex;
