@@ -92,7 +92,6 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
     if (changes.viewExtent && !changes.viewExtent.isFirstChange()) {
-      console.log("EXTENT", this.viewExtent);
       this.zoomToExtent(this.viewExtent);
     }
 
