@@ -43,7 +43,7 @@ export function layerReducer(state = l_init_state, action) {
           if (layer.layer.getVisible()) {
             layer.layer.setVisible(false);
           }
-          if (layer.name == action.body) {
+          if (action.body !== 'None' && layer.name === action.body) {
             layer.layer.setVisible(true);
           }
           return layer;

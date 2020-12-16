@@ -52,6 +52,11 @@ export class LayerselectionComponent implements OnInit {
         });
     }
 
+    getBackgroundLayer() {
+        const layer = this.backgroundLayers.find(l => l.layer.getVisible());
+        return layer ? layer.name : 'None';
+    }
+
     addSource(event: any) {
         this.status = 'Loading source';
         const source = this.sources.find(source => source.name === event);
