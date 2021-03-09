@@ -59,6 +59,7 @@ export class DrawComponent implements OnInit {
   formatFeatureGeometry(feature: any){
 
     const formatter = new GeoJSON();
+    console.log(this.crs);
     return formatter.writeFeature(feature, {
       featureProjection: 'EPSG:3857',
       dataProjection: this.crs
