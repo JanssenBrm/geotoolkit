@@ -83,7 +83,7 @@
   },
   "/proxy/vito-wmts": {
     "target": {
-      "host": "wmts01-dev.services.rscloud.vito.be",
+      "host": "wmts03-dev.services.rscloud.vito.be",
       "protocol": "http",
       "port": 8080
     },
