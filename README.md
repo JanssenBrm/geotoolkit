@@ -1,5 +1,7 @@
 # Geotoolkit 
 
+![](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white) ![](https://img.shields.io/github/last-commit/janssenbrm/winery?style=for-the-badge)
+
 A EO-dataset viewer with some additional features! The GeoToolkit is Angular based application that supports the visualisation and exploration of Earth Observation datasets.
 The viewer supports the following features:
 * Visualisation of WM(T)S based sources
