@@ -5,11 +5,12 @@ import {BACKGROUND_LAYERS} from "../config/backgroundlayers.config";
 import {Observable} from "rxjs";
 import {Http} from "@angular/http";
 import {HttpClient} from "@angular/common/http";
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class MapboxService {
 
-  private accessToken = 'pk.eyJ1IjoiYnJhbWphbnNzZW4iLCJhIjoiY2o4dnlpdGt5MTZrbTMzcnB2amJxcmRzdyJ9.WQfT2IF5Ij15-jTxbgMWRw';
+  private accessToken = environment.MAPBOX_API_KEY;
   private baseUrl = 'https://api.mapbox.com';
 
   constructor(private http:HttpClient) { }

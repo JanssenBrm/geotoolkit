@@ -1,7 +1,8 @@
 import { Tile } from 'ol/layer';
 import { OSM, XYZ } from 'ol/source';
+import {environment} from '../../environments/environment';
 
-const mapbox_access_token = 'pk.eyJ1IjoiYnJhbWphbnNzZW4iLCJhIjoiY2o4dnlpdGt5MTZrbTMzcnB2amJxcmRzdyJ9.WQfT2IF5Ij15-jTxbgMWRw'
+const mapbox_access_token = environment.MAPBOX_API_KEY;
 
 export const BACKGROUND_LAYERS = [
     {
