@@ -7,7 +7,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json",
+    "start": "ng serve",
     "build": "ng build --prod --base-href $npm_package_config_basehref --output-path geotoolkit",
     "package": "npm run-script build && cd geotoolkit && tar -zcvf ../geotoolkit.tar.gz .",
     "test": "ng test",
