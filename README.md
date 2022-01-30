@@ -1,27 +1,24 @@
-# Geotoolkit
+# Geotoolkit 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.1.
+A EO-dataset viewer with some additional features! The GeoToolkit is Angular based application that supports the visualisation and exploration of Earth Observation datasets.
+The viewer supports the following features:
+* Visualisation of WM(T)S based sources
+* Different background layers
+* Calendar support for datasets with a time dimension
+* Style selection if applicable
+* Visualisation of WMTS tile grid
+* Drawing of geometries in different projection systems
+* Location based searching
 
-## Development server
+## Try it out!
+The viewer is currently available at [https://janssenbrm.github.io/geotoolkit/](https://janssenbrm.github.io/geotoolkit/) for testing and demo purposes.
+
+## Configuring your data sources
+It is possible to configure a set of predefined data sources. This could be very useful in case you are always working with the same WM(T)S sources. 
+The different sources can be defined in the `sources.config.ts` file.
+
+## Using the code
+
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
