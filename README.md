@@ -13,6 +13,8 @@ The viewer supports the following features:
 ## Try it out!
 The viewer is currently available at [https://janssenbrm.github.io/geotoolkit/](https://janssenbrm.github.io/geotoolkit/) for testing and demo purposes.
 
+![](https://github.com/JanssenBrm/geotoolkit/blob/master/screenshots/viewer.png?raw=true)
+
 ## Configuring your data sources
 It is possible to configure a set of predefined data sources. This could be very useful in case you are always working with the same WM(T)S sources. 
 The different sources can be defined in the `sources.config.ts` file.
